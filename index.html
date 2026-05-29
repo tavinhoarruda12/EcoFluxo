@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFluxo - Calculadora de Pegada Hídrica e Painel ESG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <header class="main-header">
+        <h1>EcoFluxo</h1>
+        <p>Tecnologia e Sustentabilidade: Unindo o Campo e a Cidade</p>
+    </header>
+
+    <main class="main-content">
+
+        <section class="intro-section" aria-labelledby="title-intro">
+            <h2 id="title-intro">O Valor de Cada Gota no Agro</h2>
+            <p>
+                Baseado em dados técnicos de gestão do SENAR-PR, o EcoFluxo ajuda produtores rurais a 
+                calcularem a pegada hídrica de suas atividades e a adotarem práticas ESG. Descubra quanta água 
+                sua produção utiliza e como o consumo consciente gera impacto positivo na cidade!
+            </p>
+        </section>
+
+        <section class="calculator-section" aria-labelledby="title-calc">
+            <h2 id="title-calc">Calculadora Interativa</h2>
+            <form id="water-form" novalidate>
+                
+                <label for="activity-select">Selecione sua Atividade Principal:</label>
+                <select id="activity-select" required>
+                    <option value="" disabled selected>-- Escolha uma opção --</option>
+                    <optgroup label="Agricultura (Área)">
+                        <option value="soja">Soja (por hectare)</option>
+                        <option value="milho">Milho (por hectare)</option>
+                    </optgroup>
+                    <optgroup label="Pecuária (Criação)">
+                        <option value="bovino">Bovinos de Leite (por cabeça)</option>
+                        <option value="suino">Suínos (por cabeça)</option>
+                    </optgroup>
+                </select>
+
+                <label for="quantity-input">Quantidade (Hectares ou Cabeças):</label>
+                <input type="number" id="quantity-input" placeholder="Ex: 50" required min="1">
+
+                <button type="button" id="btn-calculate">Processar Pegada Hídrica</button>
+            </form>
+
+            <div id="error-message-box" class="error-box" hidden aria-live="assertive"></div>
+        </section>
+
+        <section class="results-section" id="results-panel" aria-labelledby="title-results" hidden>
+            <h2 id="title-results">Painel ESG & Impacto</h2>
+            
+            <article class="result-card">
+                <h3>Sua Pegada Hídrica Estimada</h3>
+                <p id="liters-result" class="highlight-data">0 litros</p>
+            </article>
+
+            <article class="esg-suggestions">
+                <h3>Sugestões de Sustentabilidade (Práticas ESG)</h3>
+                <ul id="suggestions-list">
+                    </ul>
+            </article>
+
+            <article class="urban-connection">
+                <h3>Conexão Campo-Cidade</h3>
+                <p id="city-impact-text">
+                    </p>
+            </article>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>EcoFluxo &copy; 2026 - Desenvolvido para o Concurso Agrinho (30 Anos de Inovação).</p>
+        <p>Rede Estadual de Ensino do Paraná</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
