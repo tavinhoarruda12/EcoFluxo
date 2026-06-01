@@ -158,3 +158,106 @@ input[type="number"]:focus, select:focus {
     background-color: #ffe3e3;
     color: var(--color-accent);
     border: 1px solid var(--color-accent);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   5. CONTAINER DE RESULTADOS (CORRIGIDO)
+   ========================================================================== */
+.results-container {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px dashed #dee2e6;
+}
+
+.result-card {
+    background-color: var(--color-bg-main);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    border-left: 5px solid var(--color-secondary);
+}
+
+.highlight-data {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-top: 0.5rem;
+}
+
+.esg-suggestions ul {
+    list-style-position: inside;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+.esg-suggestions li {
+    margin-bottom: 0.5rem;
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   6. NOVAS SEÇÕES (TABELA E CARDS DE PLANTAÇÃO)
+   ========================================================================== */
+/* Tabelas Responsivas */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    background-color: var(--color-primary);
+    color: var(--color-bg-card);
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-bg-main);
+}
+
+/* Cards de Plantação */
+.cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.plant-card {
+    border: 1px solid #dee2e6;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border-top: 4px solid var(--color-primary);
+}
+
+.plant-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.plant-card p {
+    margin-bottom: 0.5rem;
+}
+
+/* Rodapé */
+.main-footer {
+    background-color: var(--color-primary);
+    color: #ced4da;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
