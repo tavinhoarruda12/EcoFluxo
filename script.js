@@ -1,135 +1,193 @@
-// 1. DICIONÁRIO DE DADOS (Base de Pesquisa SENAR-PR)
-const WATER_DATA = {
-    soja: {
-        litros: 550000,
-        sugestoes: [
-            "Adote o Sistema de Plantio Direto para manter a palhada sobre o solo, diminuindo drasticamente a evaporação da água da chuva.",
-            "Faça o manejo com sensores de umidade do solo para saber exatamente o momento e a quantidade certa de irrigar."
-        ],
-        impacto: "Uma boa gestão hídrica em 1 hectare de soja poupa o volume equivalente ao consumo residencial diário de cerca de 3.500 pessoas na cidade!"
-    },
-    milho: {
-        litros: 600000,
-        sugestoes: [
-            "Planeje as datas de plantio em conformidade com o Zoneamento Agrícola de Risco Climático (ZARC).",
-            "Proteja o solo realizando rotação de culturas para estruturar melhor as raízes e a capacidade de infiltração da água."
-        ],
-        impacto: "A água poupada com tecnologia e monitoramento no milho é suficiente para abastecer uma escola pública urbana por até 2 meses!"
-    },
-    bovino: {
-        litros: 110,
-        sugestoes: [
-            "Instale calhas para captação de água pluvial nos telhados da pista de alimentação e sala de ordenha.",
-            "Efetue a reutilização da água de lavagem das instalações (através de decantação) para fertirrigação ou limpeza pesada de pátios."
-        ],
-        impacto: "Ao diminuir a captação direta, o pecuarista preserva os lençóis freáticos e garante a estabilidade dos reservatórios que abastecem as cidades vizinhas!"
-    },
-    suino: {
-        litros: 35,
-        sugestoes: [
-            "Regule a altura e a pressão das chupetas dos bebedouros regularmente para evitar que os animais desperdecem água.",
-            "Realize a raspagem a seco dos dejetos das baias antes de iniciar a lavagem com as mangueiras de pressão."
-        ],
-        impacto: "A produção de suínos eficiente protege os mananciais integrados, mantendo as bacias hidrográficas limpas e seguras para toda a sociedade."
+/* ==========================================================================
+   1. CONTROLE DE ACESSO E COLOGAÇÃO DO NOME (TELA DE BLOQUEIO)
+   ========================================================================== */
+let nomeUsuario = "";
+
+const telaBloqueio = document.getElementById("tela-bloqueio");
+const conteudoApp = document.getElementById("conteudo-aplicativo");
+const inputNome = document.getElementById("nome-usuario");
+const btnEntrar = document.getElementById("btn-entrar-app");
+const balaoSenaritoTexto = document.querySelector("#balao-senarito p");
+
+btnEntrar.addEventListener("click", () => {
+    nomeUsuario = inputNome.value.trim();
+
+    if (nomeUsuario === "") {
+        alert("Por favor, digite seu nome para entrar!");
+        return;
     }
+
+    // Transição visual para sumir com a tela de bloqueio e liberar o app
+    telaBloqueio.classList.add("tela-sumir");
+    conteudoApp.classList.remove("app-escondido");
+    conteudoApp.classList.add("app-visivel");
+
+    // Senarito dá as boas-vindas personalizadas
+    balaoSenaritoTexto.innerHTML = `Olá, <strong>${nomeUsuario}</strong>! Que bom ter você aqui no EcoFluxo. Escolha uma atividade para calcularmos a pegada hídrica!`;
+});
+
+/* ==========================================================================
+   2. BANCO DE DADOS TÉCNICOS (BASE CIENTÍFICA DO SENAR-PR / FAEP)
+   ========================================================================== */
+const dadosHidricos = {
+    // Agricultura: litros estimados de água por hectare durante o ciclo
+    soja: { nome: "Soja", fator: 5500000, unidade: "hectares", esg: 80 },
+    milho: { nome: "Milho", fator: 4500000, unidade: "hectares", esg: 75 },
+    cafe: { nome: "Café", fator: 6000000, unidade: "hectares", esg: 85 },
+    // Pecuária: litros de água consumidos diretamente por animal/lote por dia
+    bovino_leite: { nome: "Bovinos de Leite", fator: 120, unidade: "animais", esg: 70 },
+    aves: { nome: "Aves de Corte", fator: 400, unidade: "lotes", esg: 90 }, // considerando consumo do lote médio
+    suinos: { nome: "Suínos", fator: 35, unidade: "animais", esg: 75 }
 };
 
-// 2. AGUARDAR O CARREGAMENTO DO DOCUMENTO
-document.addEventListener('DOMContentLoaded', () => {
+const recomendacoesESG = {
+    soja: [
+        "Adote o Sistema de Plantio Direto para manter a palhada no solo e reter até 30% mais umidade.",
+        "Monitore o solo com sensores de umidade para irrigar apenas quando necessário.",
+        "Preserve as Matas Ciliares nas APPs para proteger as nascentes da sua propriedade."
+    ],
+    milho: [
+        "Faça rotação de culturas para melhorar a estrutura do solo e o aproveitamento da água da chuva.",
+        "Utilize sistemas de irrigação por gotejamento se houver necessidade de complementação hídrica.",
+        "Consulte os boletins climáticos do IDR-Paraná antes de programar as irrigações."
+    ],
+    cafe: [
+        "Use a irrigação por gotejamento, que reduz o desperdício por evaporação em relação ao canhão.",
+        "Mantenha a cobertura vegetal nas entrelinhas para diminuir a erosão e reter água.",
+        "Aproveite a lavagem dos grãos fazendo recirculação de água no circuito."
+    ],
+    bovino_leite: [
+        "Instale sistemas de captação de água da chuva nos telhados das salas de ordenha.",
+        "Faça o reuso da água de lavagem do piso para a primeira limpeza dos pátios ou fertirrigação.",
+        "Monitore vazamentos constantes em boias e bebedouros dos piquetes."
+    ],
+    aves: [
+        "Troque os nipples antigos por modelos modernos que evitam o gotejamento e desperdício na cama de aviário.",
+        "Monitore diariamente o hidrômetro para identificar vazamentos ocultos sob o piso.",
+        "Otimize o sistema de nebulização controlando por umidade relativa do ar."
+    ],
+    suinos: [
+        "Utilize comedouros do tipo eco-friendly (ração úmida) que reduzem o desperdício de água.",
+        "Trate os dejetos utilizando lagoas de estabilização ou biodigestores, gerando biofertilizante e preservando rios.",
+        "Regule a pressão das chupetas/bebedouros conforme a idade dos animais."
+    ]
+};
 
-    // Seleção dos Componentes de Navegação
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+/* ==========================================================================
+   3. LÓGICA DA CALCULADORA PRINCIPAL DE PEGADA HÍDRICA
+   ========================================================================== */
+const btnCalcular = document.getElementById("btn-calcular");
+const sectionResultados = document.getElementById("resultados");
+const loadingProcessamento = document.getElementById("loading-processamento");
 
-    // Seleção da Calculadora
-    const activitySelect = document.querySelector('#activity-select');
-    const quantityInput = document.querySelector('#quantity-input');
-    const btnCalculate = document.querySelector('#btn-calculate');
-    const errorMessageBox = document.querySelector('#error-message-box');
-    const resultsPanel = document.querySelector('#results-panel');
-    const litersResult = document.querySelector('#liters-result');
-    const suggestionsList = document.querySelector('#suggestions-list');
-    const cityImpactText = document.querySelector('#city-impact-text');
+btnCalcular.addEventListener("click", () => {
+    const atividadeSelecionada = document.getElementById("atividade").value;
+    const quantidadeInserida = parseFloat(document.getElementById("quantidade").value);
 
-    // Verificação de Segurança: Garante que todos os elementos básicos existem na tela
-    const elementsOk = activitySelect && quantityInput && errorMessageBox && resultsPanel && litersResult && suggestionsList && cityImpactText;
-
-    // ==========================================
-    // SISTEMA DE NAVEGAÇÃO ENTRE ABAS
-    // ==========================================
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.hidden = true);
-            
-            button.classList.add('active');
-            
-            const targetId = button.getAttribute('data-target');
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.hidden = false;
-            }
-        });
-    });
-
-    // ==========================================
-    // LÓGICA DE PROCESSAMENTO DO BOTÃO
-    // ==========================================
-    if (btnCalculate && elementsOk) {
-        btnCalculate.addEventListener('click', () => {
-            // Limpa mensagens e esconde painel anterior
-            errorMessageBox.hidden = true;
-            errorMessageBox.textContent = '';
-            resultsPanel.hidden = true;
-
-            const selectedActivity = activitySelect.value;
-            const quantityValue = quantityInput.value.trim();
-            const quantity = Number(quantityValue);
-
-            // VALIDAÇÃO ESTRITA DIRETAMENTE NA TELA (UX Segura)
-            if (!selectedActivity) {
-                showError('Por favor, selecione uma atividade agropecuária válida.');
-                return;
-            }
-
-            if (quantityValue === '' || isNaN(quantity)) {
-                showError('O campo de quantidade não pode ficar em branco. Digite um número.');
-                return;
-            }
-
-            if (quantity <= 0) {
-                showError('Quantidade inválida! Insira um número maior do que zero.');
-                return;
-            }
-
-            // SE PASSAR: Executa a Renderização dos Dados
-            const data = WATER_DATA[selectedActivity];
-            const totalWater = data.litros * quantity;
-
-            // Injeta os valores processados na tela
-            litersResult.textContent = totalWater.toLocaleString('pt-BR') + " Litros";
-            cityImpactText.textContent = data.impacto;
-
-            // Gera a lista de sugestões ESG dinamicamente
-            suggestionsList.innerHTML = '';
-            data.sugestoes.forEach(sugestao => {
-                const li = document.createElement('li');
-                li.textContent = sugestao;
-                suggestionsList.appendChild(li);
-            });
-
-            // Torna o painel visível para o usuário
-            resultsPanel.hidden = false;
-        });
-    } else {
-        console.warn("EcoFluxo: Elementos da calculadora não foram totalmente encontrados no HTML desta página.");
+    // Validação
+    if (!atividadeSelecionada || isNaN(quantidadeInserida) || quantidadeInserida <= 0) {
+        alert("Por favor, preencha todos os campos da calculadora corretamente!");
+        return;
     }
 
-    // Função interna para exibir alertas de erro amigáveis na interface
-    function showError(message) {
-        if (errorMessageBox) {
-            errorMessageBox.textContent = message;
-            errorMessageBox.hidden = false;
+    // Exibe animação de Loading (Estilo Agrohackathon)
+    loadingProcessamento.hidden = false;
+    sectionResultados.hidden = true;
+
+    setTimeout(() => {
+        // Esconde o Loading após 1.5 segundos simulados de processamento técnico
+        loadingProcessamento.hidden = true;
+        sectionResultados.hidden = false;
+
+        // Executa o cálculo científico
+        const dadosAtividade = dadosHidricos[atividadeSelecionada];
+        const pegadaTotal = quantidadeInserida * dadosAtividade.fator;
+
+        // Atualiza os valores na tela formatted
+        document.getElementById("valor-pegada").textContent = pegadaTotal.toLocaleString("pt-BR");
+
+        // Atualiza a Barra de Progresso ESG de forma dinâmica
+        const progressEsg = document.getElementById("progresso-esg");
+        progressEsg.value = dadosAtividade.esg;
+
+        // Atualiza a lista de recomendações ESG baseada no SENAR-PR
+        const listaSugestoes = document.getElementById("lista-sugestoes");
+        listaSugestoes.innerHTML = ""; // limpa anteriores
+
+        recomendacoesESG[atividadeSelecionada].forEach(dica => {
+            const li = document.createElement("li");
+            li.textContent = dica;
+            listaSugestoes.appendChild(li);
+        });
+
+        // Conexão Campo-Cidade: Tradução do Impacto
+        // 1 habitante urbano gasta em média 150 litros de água por dia no Brasil
+        const diasAbastecimentoCidade = Math.round(pegadaTotal / 150);
+        const textoImpacto = document.getElementById("texto-impacto");
+        textoImpacto.innerHTML = `<strong>${nomeUsuario}</strong>, a água gerenciada na sua produção equivale ao consumo diário doméstico de aproximadamente <strong>${diasAbastecimentoCidade.toLocaleString("pt-BR")} moradores da cidade</strong>. Seus cuidados no manejo protegem as bacias que abastecem todo o Paraná!`;
+
+        // Inteligência do Senarito reagindo aos resultados
+        balaoSenarito.style.display = "block";
+        balaoSenaritoTexto.innerHTML = `Excelente trabalho, <strong>${nomeUsuario}</strong>! Os cálculos para <strong>${dadosAtividade.nome}</strong> foram concluídos. Siga as recomendações técnicas ali embaixo para atingir a nota máxima em sustentabilidade! 🏆`;
+
+        // Rola a tela suavemente para os resultados
+        sectionResultados.scrollIntoView({ behavior: "smooth" });
+
+    }, 1500);
+});
+
+/* ==========================================================================
+   4. LÓGICA DO CALCULADOR DE CHUVA (CISTERNAS)
+   ========================================================================== */
+const btnCalcularChuva = document.getElementById("btn-calcular-chuva");
+const resultadoChuvaDiv = document.getElementById("resultado-chuva");
+
+btnCalcularChuva.addEventListener("click", () => {
+    const areaTelhado = parseFloat(document.getElementById("area-telhado").value);
+
+    if (isNaN(areaTelhado) || areaTelhado <= 0) {
+        alert("Por favor, digite uma área válida em metros quadrados!");
+        return;
+    }
+
+    // Fórmula: Área do telhado * Índice Pluviométrico Médio do PR (1400mm) * Eficiência (85%)
+    const aguaCaptadaAnual = Math.round(areaTelhado * 1400 * 0.85);
+
+    document.getElementById("valor-chuva").textContent = aguaCaptadaAnual.toLocaleString("pt-BR");
+    resultadoChuvaDiv.hidden = false;
+
+    // Senarito comenta o cálculo da chuva
+    balaoSenarito.style.display = "block";
+    balaoSenaritoTexto.innerHTML = `Olha só, <strong>${nomeUsuario}</strong>! Captando água da chuva você deixa de puxar da fonte e economiza energia elétrica. Investir em cisternas é pura Governança ESG!`;
+});
+
+/* ==========================================================================
+   5. COMPORTAMENTO VISUAL DO SENARITO (WIDGET FLUTUANTE)
+   ========================================================================= */
+const btnAvatarSenarito = document.getElementById("btn-senarito-avatar");
+const balaoSenarito = document.getElementById("balao-senarito");
+const btnFecharBalao = document.getElementById("btn-fechar-balao");
+const badgeNotificacao = document.querySelector(".notificacao-badge");
+
+// Fechar balão de fala ao clicar no "X"
+btnFecharBalao.addEventListener("click", (e) => {
+    e.stopPropagation(); // impede de disparar o clique do avatar
+    balaoSenarito.style.display = "none";
+});
+
+// Alternar balão ao clicar diretamente no avatar do Senarito
+btnAvatarSenarito.addEventListener("click", () => {
+    // Esconde a bolinha de notificação vermelha após o primeiro clique
+    if (badgeNotificacao) {
+        badgeNotificacao.style.display = "none";
+    }
+
+    if (balaoSenarito.style.display === "none" || balaoSenarito.style.display === "") {
+        balaoSenarito.style.display = "block";
+        if (nomeUsuario !== "") {
+            balaoSenaritoTexto.innerHTML = `Estou aqui monitorando seus dados, <strong>${nomeUsuario}</strong>! Pode alterar os números da calculadora e processar novamente sempre que quiser ver novas simulações.`;
         }
+    } else {
+        balaoSenarito.style.display = "none";
     }
 });
