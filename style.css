@@ -1,13 +1,13 @@
 /* ==========================================================================
-   1. VARIÁVEIS DO SISTEMA (:root) - Identidade Visual Agro/Sustentável
+   1. VARIÁVEIS DO SISTEMA (:root)
    ========================================================================== */
 :root {
-    --color-primary: #1b4d3e;     /* Verde Floresta (Sustentabilidade) */
-    --color-secondary: #d4a373;   /* Dourado Trigo (Campo/Colheita) */
-    --color-accent: #e63946;      /* Vermelho Alerta (Erros) */
-    --color-bg-main: #f8f9fa;     /* Cinza Claro Conforto Visual */
-    --color-bg-card: #ffffff;     /* Branco para blocos isolados */
-    --color-text-main: #212529;   /* Cinza Escuro de Alto Contraste */
+    --color-primary: #1b4d3e;     /* Verde Floresta */
+    --color-secondary: #d4a373;   /* Dourado Trigo */
+    --color-accent: #e63946;      /* Vermelho Alerta */
+    --color-bg-main: #f8f9fa;     /* Cinza Claro */
+    --color-bg-card: #ffffff;     /* Branco para blocos */
+    --color-text-main: #212529;   /* Cinza Escuro Alto Contraste */
     --color-text-muted: #495057;  /* Cinza Médio */
     
     --radius-md: 8px;
@@ -34,15 +34,19 @@ body {
     min-height: 100vh;
 }
 
+/* REGRA CRÍTICA DE INTERFACE: Obriga o navegador a sumir com elementos ocultados pelo JS */
+[hidden] {
+    display: none !important;
+}
+
 /* ==========================================================================
-   3. ARQUITETURA DE ABAS (UI/UX do Menu Superior)
+   3. ARQUITETURA DE ABAS
    ========================================================================== */
 .main-header {
     background-color: var(--color-primary);
     color: var(--color-bg-card);
     text-align: center;
-    padding: 2rem 1rem 0 1rem; /* Padding inferior zerado para grudar as abas */
-    box-shadow: var(--shadow-sm);
+    padding: 2rem 1rem 0 1rem;
 }
 
 .main-header h1 {
@@ -56,7 +60,6 @@ body {
     margin-bottom: 1.5rem;
 }
 
-/* Container dos botões de Abas */
 .tab-navigation {
     display: flex;
     justify-content: center;
@@ -65,7 +68,6 @@ body {
     margin: 0 auto;
 }
 
-/* Estilo Individual dos Botões das Abas */
 .tab-button {
     background-color: rgba(255, 255, 255, 0.1);
     color: #ced4da;
@@ -77,15 +79,14 @@ body {
     border-top-right-radius: var(--radius-md);
     cursor: pointer;
     transition: all var(--transition-fast);
-    border-bottom: 3px solid transparent;
 }
 
 .tab-button:hover {
     color: var(--color-bg-card);
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Estado Ativo: Aba selecionada ganha destaque visual forte */
+/* Aba selecionada */
 .tab-button.active {
     background-color: var(--color-bg-main);
     color: var(--color-primary);
@@ -93,13 +94,8 @@ body {
 }
 
 /* ==========================================================================
-   4. CONTROLADORES DE EXIBIÇÃO (Essencial para o funcionamento)
+   4. LAYOUT E CONTEÚDO
    ========================================================================== */
-/* Regra de Ouro: Garante que elementos com atributo [hidden] sumam de verdade */
-[hidden] {
-    display: none !important;
-}
-
 .main-content {
     max-width: 800px;
     width: 100%;
@@ -121,9 +117,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* ==========================================================================
-   5. FORMULÁRIO E CALCULADORA
-   ========================================================================== */
+/* Formulário */
 #water-form {
     display: flex;
     flex-direction: column;
@@ -166,7 +160,7 @@ input[type="number"]:focus, select:focus {
     background-color: #123329;
 }
 
-/* Caixa de Erro */
+/* Caixa de Erro Visível */
 .error-box {
     background-color: #ffe3e3;
     color: var(--color-accent);
@@ -175,11 +169,10 @@ input[type="number"]:focus, select:focus {
     border-radius: var(--radius-md);
     margin-top: 1rem;
     font-weight: 600;
-    font-size: 0.9rem;
 }
 
 /* ==========================================================================
-   6. PAINEL DE RESULTADOS E TABELAS
+   5. COMPONENTES DE RESULTADOS E TABELA
    ========================================================================== */
 .results-container {
     margin-top: 2rem;
@@ -202,10 +195,6 @@ input[type="number"]:focus, select:focus {
     color: var(--color-primary);
 }
 
-.esg-suggestions, .urban-connection, .tip-card {
-    margin-top: 1.2rem;
-}
-
 .esg-suggestions h3, .urban-connection h3, .tip-card h3 {
     font-size: 1.1rem;
     color: var(--color-primary);
@@ -217,7 +206,22 @@ input[type="number"]:focus, select:focus {
     color: var(--color-text-muted);
 }
 
-/* Estilização da Tabela da Aba 2 */
+.esg-suggestions li {
+    margin-bottom: 0.4rem;
+}
+
+.urban-connection p {
+    color: var(--color-text-muted);
+}
+
+.tip-card {
+    background-color: #eef5f2;
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    border-left: 5px solid var(--color-primary);
+}
+
+/* Data Table */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -239,7 +243,7 @@ input[type="number"]:focus, select:focus {
     background-color: var(--color-bg-main);
 }
 
-/* Rodapé */
+/* Footer */
 .main-footer {
     background-color: var(--color-primary);
     color: #ced4da;
