@@ -3,74 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoFluxo - Pegada Hídrica</title>
-    <link rel="stylesheet" href="estilo.css">
+    <title>EcoFluxo - Calculadora de Pegada Hídrica | Concurso Agrinho</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <h1>EcoFluxo 💧</h1>
-        <p>Gestão Inteligente de Recursos Hídricos - Base SENAR-PR</p>
-    </header>
+    <div id="tela-bloqueio" class="bloqueio-overlay">
+        <div class="bloqueio-card">
+            <div class="bloqueio-mascote">🤠</div>
+            <h2>Bem-vindo ao EcoFluxo!</h2>
+            <p>Uma ferramenta oficial criada para o Concurso Agrinho 30 Anos.</p>
+            
+            <form id="form-identificacao" onsubmit="event.preventDefault();">
+                <div class="campo-grupo">
+                    <label for="nome-usuario">Para começarmos, qual é o seu nome?</label>
+                    <input type="text" id="nome-usuario" placeholder="Digite seu nome aqui..." required autocomplete="name">
+                </div>
+                <button type="button" id="btn-entrar-app">Entrar no Aplicativo</button>
+            </form>
+            
+            <span class="bloqueio-rodape">Sistema FAEP / SENAR-PR</span>
+        </div>
+    </div>
 
-    <nav class="tab-navigation">
-        <button class="tab-button active" data-target="aba-calculadora">Calculadora</button>
-        <button class="tab-button" data-target="aba-sobre">Sobre o Projeto</button>
-    </nav>
+    <div id="conteudo-aplicativo" class="app-escondido">
+        
+        <header>
+            <div class="header-container">
+                <h1>EcoFluxo</h1>
+                <p>Tecnologia e Sustentabilidade de Mãos Dadas com o Produtor Rural</p>
+            </div>
+        </header>
 
-    <main class="container">
-        <section id="aba-calculadora" class="tab-content">
-            <div class="card">
-                <h2>Calculadora de Impacto Hídrico</h2>
-                <p>Insira os dados da sua produção para calcular o consumo estimado de água.</p>
+        <main>
+            
+            <section id="introducao" aria-label="Introdução do Projeto">
+                <h2>Unindo Campo e Cidade pela Água</h2>
+                <p>
+                    Você sabia que cada gota economizada no campo garante o futuro do abastecimento nas cidades? 
+                    O <strong>EcoFluxo</strong> ajuda o produtor rural paranaense a monitorar seu consumo hídrico baseado em dados técnicos 
+                    do SENAR-PR, promovendo uma produção sustentável e alinhada às práticas ESG.
+                </p>
+            </section>
+
+            <div class="grid-ferramentas">
                 
-                <div class="form-group">
-                    <label for="activity-select">Atividade Agropecuária:</label>
-                    <select id="activity-select">
-                        <option value="">-- Selecione uma atividade --</option>
-                        <option value="soja">Soja (por Hectare)</option>
-                        <option value="milho">Milho (por Hectare)</option>
-                        <option value="bovino">Bovino de Leite (por Cabeça/Dia)</option>
-                        <option value="suino">Suíno (por Cabeça/Dia)</option>
-                    </select>
-                </div>
+                <section id="calculadora" class="card-utilitario" aria-label="Calculadora de Pegada Hídrica">
+                    <h2>📊 Calculadora de Pegada Hídrica</h2>
+                    <p>Selecione sua atividade, insira os dados e descubra o impacto estimado do seu manejo.</p>
 
-                <div class="form-group">
-                    <label for="quantity-input">Quantidade (Hectares ou Animais):</label>
-                    <input type="number" id="quantity-input" placeholder="Ex: 10" min="1">
-                </div>
+                    <form id="form-calculadora" onsubmit="event.preventDefault();">
+                        <div class="campo-grupo">
+                            <label for="atividade">Selecione a sua Atividade Principal:</label>
+                            <select id="atividade" required>
+                                <option value="" disabled selected>-- Escolha uma opção --</option>
+                                <optgroup label="🌾 Agricultura">
+                                    <option value="soja">Soja (por Hectare)</option>
+                                    <option value="milho">Milho (por Hectare)</option>
+                                    <option value="cafe">Café (por Hectare)</option>
+                                </optgroup>
+                                <optgroup label="⚗️ Pecuária">
+                                    <option value="bovino_leite">Bovinos de Leite (por Cabeça/Dia)</option>
+                                    <option value="aves">Aves de Corte (por Lote/Dia)</option>
+                                    <option value="suinos">Suínos (por Cabeça/Dia)</option>
+                                </optgroup>
+                            </select>
+                        </div>
 
-                <button id="btn-calculate" class="btn-main">Calcular Pegada Hídrica</button>
+                        <div class="campo-grupo">
+                            <label for="quantidade">Quantidade (Hectares ou Número de Animais):</label>
+                            <input type="number" id="quantidade" min="1" placeholder="Ex: 50" inputmode="numeric" required>
+                        </div>
 
-                <div id="error-message-box" class="error-box" hidden></div>
+                        <button type="button" id="btn-calcular">Processar Pegada Hídrica</button>
+                    </form>
 
-                <div id="results-panel" class="results-box" hidden>
-                    <h3>Resultado da Análise</h3>
-                    <div class="result-value">
-                        <span id="liters-result">0 Litros</span>
+                    <div id="loading-processamento" class="loading-container" hidden>
+                        <div class="spinner"></div>
+                        <p>Consultando dados técnicos do SENAR-PR...</p>
                     </div>
+                </section>
+
+                <section id="captacao-chuva" class="card-utilitario" aria-label="Calculadora de Captação de Chuva">
+                    <h2>🌧️ Calculador de Chuva (Cisternas)</h2>
+                    <p>Descubra quanta água da chuva você pode captar gratuitamente no telhado do seu barracão.</p>
                     
-                    <div class="impact-section">
-                        <h4>Contexto de Impacto Social:</h4>
-                        <p id="city-impact-text"></p>
+                    <form id="form-chuva" onsubmit="event.preventDefault();">
+                        <div class="campo-grupo">
+                            <label for="area-telhado">Área do Telhado (em m²):</label>
+                            <input type="number" id="area-telhado" min="1" placeholder="Ex: 150" inputmode="numeric">
+                        </div>
+                        <button type="button" id="btn-calcular-chuva">Calcular Potencial de Captação</button>
+                    </form>
+                    
+                    <div id="resultado-chuva" hidden>
+                        <p>Potencial de captação estimado: <strong id="valor-chuva">0</strong> litros de água/ano!</p>
                     </div>
+                </section>
 
-                    <div class="suggestions-section">
-                        <h4>Sugestões de Manejo ESG:</h4>
-                        <ul id="suggestions-list"></ul>
+            </div>
+
+            <section id="resultados" aria-label="Painel de Resultados ESG" hidden>
+                <h2>📋 Painel de Resultados ESG</h2>
+                
+                <div id="resultado-estimado" class="card-resultado">
+                    <p>Sua pegada hídrica estimada é de: <strong id="valor-pegada">0</strong> Litros.</p>
+                    <div class="barra-progresso-container">
+                        <label for="progresso-esg">Nível de Sustentabilidade do Manejo:</label>
+                        <progress id="progresso-esg" value="0" max="100"></progress>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="aba-sobre" class="tab-content" hidden>
-            <div class="card">
-                <h2>Sobre o EcoFluxo</h2>
-                <p>Este projeto foi desenvolvido com base nas diretrizes e dados de pesquisa do <strong>SENAR-PR</strong>.</p>
-                <p>O objetivo é conscientizar e fornecer ferramentas práticas para que produtores rurais possam mensurar o impacto do uso da água e adotar práticas sustentáveis (ESG) no campo.</p>
+                <div id="sugestoes-esg" class="card-sugestoes">
+                    <h3>💡 Recomendações Técnicas de Economia</h3>
+                    <ul id="lista-sugestoes">
+                        </ul>
+                </div>
+
+                <div id="impacto-social" class="card-impacto">
+                    <h3>🏙️ Conexão Campo-Cidade (Equivalência)</h3>
+                    <p id="texto-impacto">Insira os dados acima para ver o impacto da sua economia na comunidade!</p>
+                </div>
+            </section>
+
+            <div id="container-senarito" class="senarito-widget">
+                <div id="balao-senarito" class="senarito-balao">
+                    <p>Olá! Sou o <strong>Senarito</strong>, seu técnico de campo digital. Precisa de ajuda com os cálculos?</p>
+                    <button type="button" id="btn-fechar-balao" aria-label="Fechar dica">×</button>
+                </div>
+                <button type="button" id="btn-senarito-avatar" class="senarito-avatar" aria-label="Abrir assistente Senarito">
+                    <span class="emoji-avatar">🤠</span>
+                    <span class="notificacao-badge">1</span>
+                </button>
             </div>
-        </section>
-    </main>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2026 EcoFluxo - Projeto Desenvolvido para o Concurso Agrinho (30 Anos).</p>
+            <p>Base de dados técnicos baseada nos manuais do Sistema FAEP/SENAR-PR.</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
