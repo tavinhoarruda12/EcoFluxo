@@ -3,147 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoFluxo - Calculadora de Pegada Hídrica | Concurso Agrinho</title>
+    <title>EcoFluxo - Plataforma de Gestão Hídrica & ESG (Agrinho 2026)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="tela-bloqueio" class="bloqueio-overlay">
-        <div class="bloqueio-card">
-            <div class="bloqueio-mascote">🤠</div>
-            <h2>Bem-vindo ao EcoFluxo!</h2>
-            <p>Uma ferramenta oficial criada para o Concurso Agrinho 30 Anos.</p>
-            
-            <form id="form-identificacao" onsubmit="event.preventDefault();">
-                <div class="campo-grupo">
-                    <label for="nome-usuario">Para começarmos, qual é o seu nome?</label>
-                    <input type="text" id="nome-usuario" placeholder="Digite seu nome aqui..." required autocomplete="name">
-                </div>
-                <button type="button" id="btn-entrar-app">Entrar no Aplicativo</button>
-            </form>
-            
-            <span class="bloqueio-rodape">Sistema FAEP / SENAR-PR</span>
+    <header class="main-header">
+        <div class="header-brand">
+            <h1>EcoFluxo</h1>
+            <p>Concurso Agrinho 2026 • Agro Forte, Futuro Sustentável</p>
+        </div>
+        
+        <nav class="tab-navigation">
+            <button type="button" class="tab-button active" data-target="aba-calculadora">Calculadora & ESG</button>
+            <button type="button" class="tab-button" data-target="aba-governanca">Governanca (G)</button>
+            <button type="button" class="tab-button" data-target="aba-chuva">Calculador de Chuva</button>
+            <button type="button" class="tab-button" data-target="aba-quiz">Quiz Água Oculta</button>
+            <button type="button" class="tab-button" data-target="aba-hidroponia">Manual de Hidroponia</button>
+            <button type="button" class="tab-button" data-target="aba-senar">Espaço SENAR-PR</button>
+        </nav>
+    </header>
+
+    <div class="assistant-banner" aria-live="polite">
+        <div class="assistant-avatar">🤖</div>
+        <div class="assistant-speech">
+            <strong id="assistant-name">Tutor EcoFluxo:</strong>
+            <p id="assistant-text">Olá! Eu sou o seu assistente digital. Selecione uma atividade abaixo para calcular a sua pegada hídrica e descobrir dicas práticas de sustentabilidade!</p>
         </div>
     </div>
 
-    <div id="conteudo-aplicativo" class="app-escondido">
-        
-        <header>
-            <div class="header-container">
-                <h1>EcoFluxo</h1>
-                <p>Tecnologia e Sustentabilidade de Mãos Dadas com o Produtor Rural</p>
-            </div>
-        </header>
+    <main class="main-content">
 
-        <main>
+        <section id="aba-calculadora" class="tab-content">
+            <h2>Calculadora Interativa de Pegada Hídrica</h2>
+            <p class="context-text">Descubra o consumo hídrico estimado de sua safra ou criação e compare seu desempenho real.</p>
             
-            <section id="introducao" aria-label="Introdução do Projeto">
-                <h2>Unindo Campo e Cidade pela Água</h2>
-                <p>
-                    Você sabia que cada gota economizada no campo garante o futuro do abastecimento nas cidades? 
-                    O <strong>EcoFluxo</strong> ajuda o produtor rural paranaense a monitorar seu consumo hídrico baseado em dados técnicos 
-                    do SENAR-PR, promovendo uma produção sustentável e alinhada às práticas ESG.
-                </p>
-            </section>
+            <form id="water-form" onsubmit="return false;" novalidate>
+                <label for="activity-select">Selecione sua Atividade Principal:</label>
+                <select id="activity-select" required>
+                    <option value="" disabled selected>-- Escolha uma opção --</option>
+                    <option value="soja">Soja (por hectare)</option>
+                    <option value="milho">Milho (por hectare)</option>
+                    <option value="bovino">Bovinos de Leite (por cabeça)</option>
+                    <option value="suino">Suínos (por cabeça)</option>
+                </select>
 
-            <div class="grid-ferramentas">
-                
-                <section id="calculadora" class="card-utilitario" aria-label="Calculadora de Pegada Hídrica">
-                    <h2>📊 Calculadora de Pegada Hídrica</h2>
-                    <p>Selecione sua atividade, insira os dados e descubra o impacto estimado do seu manejo.</p>
+                <label for="quantity-input">Quantidade (Hectares ou Animais):</label>
+                <input type="number" id="quantity-input" placeholder="Ex: 100" min="1" required>
 
-                    <form id="form-calculadora" onsubmit="event.preventDefault();">
-                        <div class="campo-grupo">
-                            <label for="atividade">Selecione a sua Atividade Principal:</label>
-                            <select id="atividade" required>
-                                <option value="" disabled selected>-- Escolha uma opção --</option>
-                                <optgroup label="🌾 Agricultura">
-                                    <option value="soja">Soja (por Hectare)</option>
-                                    <option value="milho">Milho (por Hectare)</option>
-                                    <option value="cafe">Café (por Hectare)</option>
-                                </optgroup>
-                                <optgroup label="⚗️ Pecuária">
-                                    <option value="bovino_leite">Bovinos de Leite (por Cabeça/Dia)</option>
-                                    <option value="aves">Aves de Corte (por Lote/Dia)</option>
-                                    <option value="suinos">Suínos (por Cabeça/Dia)</option>
-                                </optgroup>
-                            </select>
-                        </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="chk-manejo-sustentavel">
+                    <label for="chk-manejo-sustentavel">Já utilizo técnicas de manejo sustentável (ex: Plantio Direto ou Reuso de Água)</label>
+                </div>
 
-                        <div class="campo-grupo">
-                            <label for="quantidade">Quantidade (Hectares ou Número de Animais):</label>
-                            <input type="number" id="quantidade" min="1" placeholder="Ex: 50" inputmode="numeric" required>
-                        </div>
+                <button type="button" id="btn-calculate">Processar Pegada Hídrica</button>
+            </form>
 
-                        <button type="button" id="btn-calcular">Processar Pegada Hídrica</button>
-                    </form>
+            <div id="error-message-box" class="error-box" hidden></div>
 
-                    <div id="loading-processamento" class="loading-container" hidden>
-                        <div class="spinner"></div>
-                        <p>Consultando dados técnicos do SENAR-PR...</p>
+            <div id="results-panel" class="results-container" hidden>
+                <article class="result-card">
+                    <h3>Sua Pegada Hídrica Estimada</h3>
+                    <p id="liters-result" class="highlight-data">0 litros</p>
+                </article>
+
+                <article class="gamification-card">
+                    <h3>Classificação de Eficiência ESG</h3>
+                    <div class="badge-display">Nota: <span id="esg-badge">C</span></div>
+                    <div class="progress-bar-wrapper">
+                        <label for="esg-progress">Progresso Rumo à Meta Sustentável:</label>
+                        <progress id="esg-progress" max="100" value="50"></progress>
                     </div>
-                </section>
+                </article>
 
-                <section id="captacao-chuva" class="card-utilitario" aria-label="Calculadora de Captação de Chuva">
-                    <h2>🌧️ Calculador de Chuva (Cisternas)</h2>
-                    <p>Descubra quanta água da chuva você pode captar gratuitamente no telhado do seu barracão.</p>
-                    
-                    <form id="form-chuva" onsubmit="event.preventDefault();">
-                        <div class="campo-grupo">
-                            <label for="area-telhado">Área do Telhado (em m²):</label>
-                            <input type="number" id="area-telhado" min="1" placeholder="Ex: 150" inputmode="numeric">
-                        </div>
-                        <button type="button" id="btn-calcular-chuva">Calcular Potencial de Captação</button>
-                    </form>
-                    
-                    <div id="resultado-chuva" hidden>
-                        <p>Potencial de captação estimado: <strong id="valor-chuva">0</strong> litros de água/ano!</p>
-                    </div>
-                </section>
+                <div class="translations-grid">
+                    <article class="translation-item">
+                        <h4>Equivalência em Piscinas</h4>
+                        <p id="txt-piscinas">-</p>
+                    </article>
+                    <article class="translation-item">
+                        <h4>Abastecimento Urbano</h4>
+                        <p id="txt-cidade">-</p>
+                    </article>
+                </div>
 
+                <article class="placar-economia" id="placar-box" hidden>
+                    <h4>🌱 Placar de Economia Premiada</h4>
+                    <p id="txt-economia"></p>
+                </article>
+
+                <article class="esg-suggestions">
+                    <h3>Recomendações Práticas baseadas no SENAR-PR</h3>
+                    <ul id="suggestions-list"></ul>
+                </article>
+
+                <div class="button-actions">
+                    <button type="button" id="btn-cert" class="secondary-button">Generar Selo Virtual: Produtor Guardião</button>
+                </div>
+                <div id="cert-display" class="cert-box" hidden>
+                    🏆 <strong>Selo Virtual EcoFluxo 2026</strong><br>Esta propriedade foi auditada virtualmente e cumpre práticas conscientes de uso da água!
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-governanca" class="tab-content" hidden>
+            <h2>Checklist de Governança Rural</h2>
+            <p class="context-text">O pilar de governança assegura a conformidade legal da propriedade, blindando o produtor contra riscos jurídicos e climáticos.</p>
+            
+            <div class="gov-checklist">
+                <div class="check-item">
+                    <input type="checkbox" class="gov-chk" id="gov-car">
+                    <label for="gov-car">Cadastro Ambiental Rural (CAR) ativo e regularizado.</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" class="gov-chk" id="gov-outorga">
+                    <label for="gov-outorga">Outorga de Direito de Uso de Recursos Hídricos aprovada (ou dispensa válida).</label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" class="gov-chk" id="gov-app">
+                    <label for="gov-app">Áreas de Preservação Permanente (APPs) e Matas Ciliares protegidas ao redor de rios e nascentes.</label>
+                </div>
+            </div>
+            
+            <div id="gov-result-box" class="success-box" hidden>
+                🎉 <strong>Sua propriedade cumpre os critérios de Governança Hídrica! Parabéns pela transparência e responsabilidade socioambiental.</strong>
+            </div>
+        </section>
+
+        <section id="aba-chuva" class="tab-content" hidden>
+            <h2>Calculador de Captação Pluvial (Água de Telhado)</h2>
+            <p class="context-text">Calcule quanta água gratuita você pode coletar anualmente usando o telhado das suas estruturas, baseado nas médias pluviométricas do Paraná.</p>
+            
+            <form id="rain-form" onsubmit="return false;">
+                <label for="roof-input">Área Total do Telhado (em m²):</label>
+                <input type="number" id="roof-input" placeholder="Ex: 500" min="1">
+
+                <button type="button" id="btn-calc-rain">Calcular Potencial de Captação</button>
+            </form>
+
+            <div id="rain-result-panel" class="results-container" hidden>
+                <div class="result-card">
+                    <h3>Volume Anual Captável Estimado</h3>
+                    <p id="rain-liters-result" class="highlight-data">0 litros</p>
+                    <p class="context-text" style="margin-top:10px;">Cálculo baseado em uma média pluviométrica paranaense estável de 1.400mm anuais, aplicando o fator técnico de eficiência de 85%.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-quiz" class="tab-content" hidden>
+            <h2>Quiz da Água Oculta (Conexão Campo-Cidade)</h2>
+            <p class="context-text">Você sabe quanta água virtual está embutida nos bens de consumo diários da cidade? Escolha um item abaixo e surpreenda-se!</p>
+            
+            <div class="quiz-grid">
+                <button type="button" class="quiz-btn" data-product="cafe">☕ 1 Xícara de Café (125ml)</button>
+                <button type="button" class="quiz-btn" data-product="camiseta">👕 1 Camiseta de Algodão</button>
+                <button type="button" class="quiz-btn" data-product="carne">🥩 1 Quilo de Carne Bovina</button>
             </div>
 
-            <section id="resultados" aria-label="Painel de Resultados ESG" hidden>
-                <h2>📋 Painel de Resultados ESG</h2>
-                
-                <div id="resultado-estimado" class="card-resultado">
-                    <p>Sua pegada hídrica estimada é de: <strong id="valor-pegada">0</strong> Litros.</p>
-                    <div class="barra-progresso-container">
-                        <label for="progresso-esg">Nível de Sustentabilidade do Manejo:</label>
-                        <progress id="progresso-esg" value="0" max="100"></progress>
-                    </div>
-                </div>
-
-                <div id="sugestoes-esg" class="card-sugestoes">
-                    <h3>💡 Recomendações Técnicas de Economia</h3>
-                    <ul id="lista-sugestoes">
-                        </ul>
-                </div>
-
-                <div id="impacto-social" class="card-impacto">
-                    <h3>🏙️ Conexão Campo-Cidade (Equivalência)</h3>
-                    <p id="texto-impacto">Insira os dados acima para ver o impacto da sua economia na comunidade!</p>
-                </div>
-            </section>
-
-            <div id="container-senarito" class="senarito-widget">
-                <div id="balao-senarito" class="senarito-balao">
-                    <p>Olá! Sou o <strong>Senarito</strong>, seu técnico de campo digital. Precisa de ajuda com os cálculos?</p>
-                    <button type="button" id="btn-fechar-balao" aria-label="Fechar dica">×</button>
-                </div>
-                <button type="button" id="btn-senarito-avatar" class="senarito-avatar" aria-label="Abrir assistente Senarito">
-                    <span class="emoji-avatar">🤠</span>
-                    <span class="notificacao-badge">1</span>
-                </button>
+            <div id="quiz-result-box" class="quiz-display-card" hidden>
+                <h4 id="quiz-product-title">Item</h4>
+                <p id="quiz-product-value" class="highlight-data">0 Litros</p>
+                <p class="pedagogic-message">"O campo trabalha duro para otimizar esse uso. Economizar comida e recursos na cidade também é economizar a água do campo!"</p>
             </div>
 
-        </main>
+            <div class="consumer-calculator">
+                <h3>Espaço do Consumidor Urbano</h3>
+                <label for="milk-consumer-input">Quantos litros de leite sua família consome por mês?</label>
+                <input type="number" id="milk-consumer-input" placeholder="Ex: 12" min="0">
+                <button type="button" id="btn-calc-consumer">Verificar Meu Impacto Rural</button>
+                <p id="consumer-feedback-text" class="consumer-text-output"></p>
+            </div>
+        </section>
 
-        <footer>
-            <p>&copy; 2026 EcoFluxo - Projeto Desenvolvido para o Concurso Agrinho (30 Anos).</p>
-            <p>Base de dados técnicos baseada nos manuais do Sistema FAEP/SENAR-PR.</p>
-        </footer>
-    </div>
+        <section id="aba-hidroponia" class="tab-content" hidden>
+            <h2>Manual Prático de Cultivo Hidropônico</h2>
+            <p class="context-text">A hidroponia por fluxo e refluxo maximiza os recursos hídricos. Navegue pelos submódulos técnicos abaixo:</p>
+            
+            <div class="subtab-navigation">
+                <button type="button" class="subtab-button active" data-sub="sub-equip">Equipamentos</button>
+                <button type="button" class="subtab-button" data-sub="sub-manejo">Melhores Práticas</button>
+                <button type="button" class="subtab-button" data-sub="sub-cuidados">Cuidados</button>
+                <button type="button" class="subtab-button" data-sub="sub-cultivos">Cultivos</button>
+                <button type="button" class="subtab-button" data-sub="sub-custos">Redução de Custos</button>
+                <button type="button" class="subtab-button" data-sub="sub-mercado">Diferenciais</button>
+                <button type="button" class="subtab-button" data-sub="sub-integracao">Integração</button>
+            </div>
+
+            <div class="subtab-container">
+                <div id="sub-equip" class="subtab-content">
+                    <h3>Equipamentos Essenciais</h3>
+                    <ul>
+                        <li><strong>Reservatório:</strong> Armazena a água e os nutrientes essenciais.</li>
+                        <li><strong>Bomba submersa:</strong> Move o fluxo da água nutritiva até as bancadas de cultivo.</li>
+                        <li><strong>Temporizador digital:</strong> Controla os horários exatos de acionamento da irrigação.</li>
+                        <li><strong>Válvula de transbordamento:</strong> Evita inundações excessivas nas canaletas e raízes.</li>
+                        <li><strong>Substrato inerte:</strong> Argila expandida, perlita ou lã de rocha para ancoragem da planta.</li>
+                    </ul>
+                </div>
+
+                <div id="sub-manejo" class="subtab-content" hidden>
+                    <h3>Melhores Práticas de Manejo</h3>
+                    <ul>
+                        <li><strong>Ajustar o tempo:</strong> Realize ciclos de inundação de 10 a 15 minutos.</li>
+                        <li><strong>Frequência diária:</strong> Irrigue entre 2 a 4 vezes ao dia, conforme o clima.</li>
+                        <li><strong>Medir o pH:</strong> Mantenha a água rigorosamente entre 5.5 e 6.5 para melhor absorção.</li>
+                        <li><strong>Controlar a EC:</strong> Monitore rotineiramente a condutividade elétrica dos nutrientes na água.</li>
+                        <li><strong>Troca da solução:</strong> Renove integralmente a solução do reservatório a cada duas semanas.</li>
+                    </ul>
+                </div>
+
+                <div id="sub-cuidados" class="subtab-content" hidden>
+                    <h3>Cuidados e Manutenção Periódica</h3>
+                    <ul>
+                        <li><strong>Limpar o filtro:</strong> Evite entupimentos e queimas na bomba submersa de circulação.</li>
+                        <li><strong>Falta de energia:</strong> Possua geradores ou sistemas auxiliares para as raízes não secarem.</li>
+                        <li><strong>Higienizar tubulações:</strong> Utilize peróxido de hidrogênio técnico entre as janelas de safras.</li>
+                        <li><strong>Oxigenação do tanque:</strong> Utilize bombinhas de aquário comuns para aerar o reservatório líquido.</li>
+                        <li><strong>Temperatura da água:</strong> Monitore para manter o líquido sempre abaixo de 24°C.</li>
+                    </ul>
+                </div>
+
+                <div id="sub-cultivos" class="subtab-content" hidden>
+                    <h3>Cultivos Mais Recomendados</h3>
+                    <ul>
+                        <li><strong>Hortaliças folhosas:</strong> Alface, rúcula, agrião e espinafre possuem excelente ciclo hídrico.</li>
+                        <li><strong>Ervas aromáticas:</strong> Manjericão, hortelã, salsa e cebolinha adaptam-se perfeitamente.</li>
+                        <li><strong>Mudas clonadas:</strong> Excelente ambiente técnico para enraizamento rápido de estacas.</li>
+                        <li><strong>Microgreens:</strong> Produção ultra rápida de brotos jovens de altíssimo valor biológico.</li>
+                        <li><strong>Flores de corte:</strong> Orquídeas e crisântemos desenvolvem-se com qualidade comercial superior.</li>
+                    </ul>
+                </div>
+
+                <div id="sub-custos" class="subtab-content" hidden>
+                    <h3>Estratégias de Redução de Custos</h3>
+                    <ul>
+                        <li><strong>Energia solar:</strong> Instale painéis fotovoltaicos para alimentar as bombas d'água de graça.</li>
+                        <li><strong>Captação de chuva:</strong> Colete água da chuva para o abastecimento inicial e renovação dos tanques.</li>
+                        <li><strong>Nutrientes orgânicos:</strong> Substitua adubos sintéticos por biofertilizantes filtrados refinados (Bioponia).</li>
+                        <li><strong>Gravidade a favor:</strong> Posicione o reservatório principal no ponto mais elevado para o refluxo retornar sem bombas.</li>
+                    </ul>
+                </div>
+
+                <div id="sub-mercado" class="subtab-content" hidden>
+                    <h3>Diferenciais de Mercado e Vendas</h3>
+                    <ul>
+                        <li><strong>Selo "Livre de Agrotóxicos":</strong> Agregue valor de comercialização pelo cultivo limpo e protegido.</li>
+                        <li><strong>Venda com raiz viva:</strong> Disponibilize a alface direto no vaso de substrato para estender a vida útil nas gôndolas.</li>
+                        <li><strong>Cultivos exóticos:</strong> Foque em variedades gourmet de alto valor agregado (alface roxa ou mini-hortaliças).</li>
+                        <li><strong>Assinatura de brotos:</strong> Crie um clube de entrega recorrente de microgreens para o comércio local.</li>
+                    </ul>
+                </div>
+
+                <div id="sub-integracao" class="subtab-content" hidden>
+                    <h3>Integração Avançada de Sistemas</h3>
+                    <ul>
+                        <li><strong>Aquaponia:</strong> Conecte o refluxo hídrico a tanques de peixes para reutilizar a matéria orgânica como adubo.</li>
+                        <li><strong>Verticalização:</strong> Empilhe as prateleiras de fluxo para triplicar a densidade de plantas na mesma área física.</li>
+                        <li><strong>Climatização automatizada:</strong> Use exaustores acionados por sensores de temperatura para evitar superaquecimento.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-senar" class="tab-content" hidden>
+            <h2>Espaço SENAR-PR & Aprendizado Contínuo</h2>
+            <p class="context-text">A capacitação continuada do produtor rural é a maior garantia de um campo produtivo e ecológico. Conecte-se com os treinamentos gratuitos oficiais do SENAR Paraná:</p>
+            
+            <ul class="senar-links">
+                <li>🌱 <strong>Manejo de Irrigação:</strong> Técnicas de aplicação precisa para evitar desperdício de água e energia elétrica.</li>
+                <li>💧 <strong>Proteção de Fontes e Olhos d'Água:</strong> Recuperação de nascentes degradadas e isolamento de áreas ciliares rurais.</li>
+                <li>🐷 <strong>Tratamento de Dejetos na Pecuária:</strong> Transformação de passivos ambientais em biofertilizantes ricos e seguros.</li>
+            </ul>
+            <div class="tip-card" style="margin-top:20px;">
+                <p>Consulte o Sindicato Rural do seu município ou acesse os portais oficiais do Sistema FAEP/SENAR-PR para emitir certificados profissionais válidos.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>EcoFluxo &copy; 2026 - Concurso Agrinho • Desenvolvido em conformidade com as diretrizes do Ensino de Programação do Paraná.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
