@@ -114,3 +114,8 @@ function showResults(activityKey, qty) {
     // Exibe o painel de resultados removendo o hidden
     resultsPanel.hidden = false;
 }
+// 1. DADOS DE REFERÊNCIA
+const WATER_DATA = {
+    soja: { litros: 550000, impacto: "Isso equivale ao consumo residencial diário de cerca de 3.500 pessoas na cidade!", sugestoes: ["Adote o Plantio Direto para reter a umidade natural do solo.", "Utilize sensores de manejo de irrigação."] },
+    milho: { litros: 600000, impacto: "Essa economia abasteceria uma escola pública urbana por até 2 meses!", sugestoes: ["Sincronize a irrigação com o período crítico.", "Faça rotação de culturas."] },
+    bovino: { litros: 110, impacto: "Evita a sobrecarga dos mananciais que abastecem os municípios!", sugestoes: ["Capte água da chuva nos telhados.", "Reutilize a água de lavagem."]
