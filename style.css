@@ -1,36 +1,31 @@
 /* ==========================================================================
-   1. VARIÁVEIS DO SISTEMA (:root) - Identidade Visual e Alto Contraste
+   1. VARIÁVEIS (:root)
    ========================================================================== */
 :root {
-    /* Cores Principais (Tema Agro/Sustentabilidade) */
-    --color-primary: #1b4d3e;     /* Verde Floresta Fechado (Confiança e Natureza) */
-    --color-secondary: #d4a373;   /* Dourado Quente/Trigo (Campo e Colheita) */
-    --color-accent: #e63946;      /* Vermelho Alerta (Para mensagens de erro) */
+    --color-primary: #1b4d3e;
+    --color-primary-dark: #123329;
+    --color-secondary: #d4a373;
+    --color-accent: #e63946;
+    --color-bg-main: #f8f9fa;
+    --color-bg-card: #ffffff;
+    --color-text-main: #212529;
+    --color-text-muted: #495057;
     
-    /* Cores de Fundo e Texto (UX e Legibilidade) */
-    --color-bg-main: #f8f9fa;     /* Cinza Ultra Claro (Evita o cansaço visual do branco puro) */
-    --color-bg-card: #ffffff;     /* Branco para os blocos/cards isolados */
-    --color-text-main: #212529;   /* Cinza Escuro Quase Preto (Alto contraste para leitura) */
-    --color-text-muted: #495057;  /* Cinza Médio para textos secundários */
-    
-    /* Configurações de Layout */
     --radius-md: 8px;
     --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
     --transition-fast: 0.3s ease;
 }
 
 /* ==========================================================================
-   2. RESET GLOBAL (*) - Consistência entre Navegadores
+   2. RESET E CONFIGURAÇÕES GERAIS
    ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Tipografia limpa e moderna */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Base do Corpo do Site */
 body {
     background-color: var(--color-bg-main);
     color: var(--color-text-main);
@@ -40,57 +35,84 @@ body {
     min-height: 100vh;
 }
 
-/* ==========================================================================
-   3. ESTILIZAÇÃO COMPONENTES (Layout e Fluxo)
-   ========================================================================== */
-
-/* Cabeçalho */
-.main-header {
-    background-color: var(--color-primary);
-    color: var(--color-bg-card);
-    text-align: center;
-    padding: 2.5rem 1rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.main-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-}
-
-.main-header p {
-    color: var(--color-secondary);
-    font-size: 1.1rem;
-    font-weight: 500;
-}
-
-/* Container Principal */
 .main-content {
     max-width: 800px;
     width: 100%;
     margin: 2rem auto;
     padding: 0 1rem;
-    flex: 1; /* Garante que o rodapé fique sempre embaixo */
+    flex: 1;
 }
 
-/* Seções Gerais (Cards Separados por Espaço Confortável) */
-section {
+.context-text {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   3. CABEÇALHO E SISTEMA DE ABAS (UI/UX)
+   ========================================================================== */
+.main-header {
+    background-color: var(--color-primary);
+    color: var(--color-bg-card);
+    text-align: center;
+    padding: 2rem 1rem 0 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.main-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.main-header p {
+    color: var(--color-secondary);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Container das Abas */
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    color: #ced4da;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.tab-button:hover {
+    color: var(--color-secondary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Aba Ativa */
+.tab-button.active {
+    color: var(--color-primary);
+    background-color: var(--color-bg-main);
+    border-bottom: 3px solid var(--color-secondary);
+}
+
+/* ==========================================================================
+   4. ESTILIZAÇÃO DAS SEÇÕES / CONTEÚDO
+   ========================================================================== */
+.tab-content {
     background-color: var(--color-bg-card);
     padding: 2rem;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    margin-bottom: 2rem;
 }
 
-section h2 {
-    color: var(--color-primary);
-    margin-bottom: 1rem;
-    border-bottom: 2px solid var(--color-bg-main);
-    padding-bottom: 0.5rem;
-}
-
-/* Formulário de Entrada de Dados */
+/* Formulário */
 #water-form {
     display: flex;
     flex-direction: column;
@@ -108,17 +130,13 @@ input[type="number"], select {
     border: 2px solid #dee2e6;
     border-radius: var(--radius-md);
     font-size: 1rem;
-    color: var(--color-text-main);
-    transition: border-color var(--transition-fast);
 }
 
-/* Feedback Visual de Foco (Acessibilidade) */
 input[type="number"]:focus, select:focus {
     outline: none;
     border-color: var(--color-primary);
 }
 
-/* Botão de Ação Interativo */
 #btn-calculate {
     background-color: var(--color-primary);
     color: var(--color-bg-card);
@@ -128,77 +146,15 @@ input[type="number"]:focus, select:focus {
     font-weight: bold;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background-color var(--transition-fast), transform 0.1s ease;
-    box-shadow: var(--shadow-sm);
+    transition: background-color var(--transition-fast);
 }
 
 #btn-calculate:hover {
-    background-color: #123329; /* Escurece o verde suavemente no hover */
+    background-color: var(--color-primary-dark);
 }
 
-#btn-calculate:active {
-    transform: scale(0.98); /* Efeito de clique físico */
-}
-
-/* Caixa de Erro Renderizada diretamente na tela */
+/* Caixa de Erro */
 .error-box {
     background-color: #ffe3e3;
     color: var(--color-accent);
     border: 1px solid var(--color-accent);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    margin-top: 1rem;
-    font-weight: 600;
-}
-
-/* Painel de Resultados ESG */
-.result-card {
-    background-color: var(--color-bg-main);
-    text-align: center;
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 1.5rem;
-    border-left: 5px solid var(--color-secondary);
-}
-
-.highlight-data {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--color-primary);
-    margin-top: 0.5rem;
-}
-
-/* Listas de Sugestões ESG e Conexão Urbana */
-.esg-suggestions, .urban-connection {
-    margin-top: 1.5rem;
-}
-
-.esg-suggestions h3, .urban-connection h3 {
-    font-size: 1.2rem;
-    color: var(--color-primary);
-    margin-bottom: 0.5rem;
-}
-
-.esg-suggestions ul {
-    list-style-position: inside;
-    padding-left: 0.5rem;
-}
-
-.esg-suggestions li {
-    margin-bottom: 0.5rem;
-    color: var(--color-text-muted);
-}
-
-/* Rodapé */
-.main-footer {
-    background-color: var(--color-primary);
-    color: #ced4da;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    font-size: 0.9rem;
-    margin-top: auto;
-}
-
-.main-footer p:first-child {
-    margin-bottom: 0.3rem;
-}
