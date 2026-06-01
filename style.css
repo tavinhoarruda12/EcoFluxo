@@ -1,127 +1,317 @@
-/* CORREÇÃO CRÍTICA: Garante que o atributo hidden do HTML/JS funcione sempre */
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS (Identidade Visual EcoFluxo)
+   ========================================================================== */
+:root {
+    --primary-color: #0b69a3;       /* Azul Água Principal */
+    --primary-dark: #074b75;        /* Azul Escuro para Detalhes */
+    --accent-color: #27a364;        /* Verde ESG / Sustentabilidade */
+    --accent-hover: #1e7e4c;        /* Verde Escuro para Botões */
+    --bg-color: #f4f7f9;            /* Fundo da Tela */
+    --card-bg: #ffffff;             /* Fundo dos Cards */
+    --text-color: #2c3e50;          /* Cor do Texto Principal */
+    --text-muted: #7f8c8d;          /* Cor para Textos Secundários */
+    --error-color: #e74c3c;         /* Vermelho para Alertas */
+    --error-bg: #fde8e7;            /* Fundo do Alerta */
+    --radius: 12px;                 /* Arredondamento dos Cantos */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* CORREÇÃO CRÍTICA: Garante que o atributo 'hidden' do HTML/JS funcione sempre */
 [hidden] {
     display: none !important;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.main-header {
-    background-color: #0288d1;
-    color: white;
-    text-align: center;
-    padding: 2rem 1rem;
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
+/* ==========================================================================
+   CABEÇALHO (Header)
+   ========================================================================== */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.main-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* ==========================================================================
+   NAVEGAÇÃO POR ABAS (Tabs)
+   ========================================================================== */
 .tab-navigation {
     display: flex;
     justify-content: center;
-    background-color: #01579b;
+    background-color: var(--primary-dark);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .tab-button {
     background: none;
     border: none;
-    color: #b3e5fc;
-    padding: 1rem 2rem;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 1.2rem 2rem;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    position: relative;
 }
 
 .tab-button:hover {
     color: white;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .tab-button.active {
     color: white;
-    border-bottom: 4px solid #81c784;
-    font-weight: bold;
 }
 
+/* Linha indicadora abaixo da aba ativa */
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 2px 2px 0 0;
+}
+
+/* ==========================================================================
+   LAYOUT E CARDS
+   ========================================================================== */
 .container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    max-width: 680px;
+    margin: 2.5rem auto;
+    padding: 0 1.2rem;
 }
 
 .card {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
+.card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+}
+
+.card > p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   FORMULÁRIOS (Inputs e Selects)
+   ========================================================================== */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color);
 }
 
-.form-group select, .form-group input {
+.form-group select, 
+.form-group input {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    padding: 0.85rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: #fafbfd;
+    transition: var(--transition);
+    outline: none;
 }
 
+.form-group select:focus, 
+.form-group input:focus {
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(11, 105, 163, 0.15);
+}
+
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
 .btn-main {
     width: 100%;
-    background-color: #2e7d32;
+    background-color: var(--accent-color);
     color: white;
     border: none;
-    padding: 1rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 4px;
+    padding: 1.1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
     cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(39, 163, 100, 0.2);
 }
 
 .btn-main:hover {
-    background-color: #1b5e20;
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(39, 163, 100, 0.3);
 }
 
+.btn-main:active {
+    transform: translateY(1px);
+}
+
+/* ==========================================================================
+   ALERTAS E CAIXAS DE MENSAGEM
+   ========================================================================== */
 .error-box {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 1rem;
-    border-radius: 4px;
-    margin-top: 1rem;
-    font-weight: 500;
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-left: 4px solid var(--error-color);
+    animation: fadeIn 0.3s ease;
 }
 
+/* ==========================================================================
+   PAINEL DE RESULTADOS
+   ========================================================================== */
 .results-box {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 2px dashed #b0bec5;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px dashed #e2e8f0;
+    animation: fadeIn 0.4s ease;
+}
+
+.results-box h3 {
+    font-size: 1.3rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 .result-value {
-    font-size: 1.8rem;
-    color: #0288d1;
-    font-weight: bold;
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    font-weight: 800;
     text-align: center;
-    margin: 1rem 0;
-    background: #e1f5fe;
+    margin: 1rem 0 2rem 0;
+    background: linear-gradient(180deg, #eef7fc, #e1f1fc);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #d2e9f9;
+    letter-spacing: -0.5px;
+}
+
+.impact-section, 
+.suggestions-section {
+    margin-bottom: 1.8rem;
+}
+
+.impact-section h4, 
+.suggestions-section h4 {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.impact-section p {
+    background-color: #fff9db;
+    border-left: 4px solid #fcc419;
     padding: 1rem;
-    border-radius: 4px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    color: #92400e;
 }
 
-ul {
-    padding-left: 1.2rem;
+/* Lista de Sugestões ESG */
+.suggestions-section ul {
+    list-style: none;
 }
 
-li {
-    margin-bottom: 0.5rem;
+.suggestions-section li {
+    position: relative;
+    padding-left: 1.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+/* Ícone customizado de check verde para a lista */
+.suggestions-section li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: 800;
+    font-size: 1.1rem;
+    top: -2px;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES E RESPONSIVIDADE
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 1rem auto;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+    .main-header {
+        padding: 2rem 1rem;
+    }
+    .main-header h1 {
+        font-size: 2rem;
+    }
+    .tab-button {
+        padding: 1rem;
+        font-size: 0.9rem;
+        flex: 1;
+        text-align: center;
+    }
 }
