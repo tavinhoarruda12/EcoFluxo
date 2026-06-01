@@ -1,544 +1,424 @@
-/* ==========================================================================
-   1. CONFIGURAÇÕES GERAIS E VARIÁVEIS (DESIGN SYSTEM)
-   ========================================================================== */
 :root {
-    --verde-principal: #1b4d3e;       /* Verde escuro premium (Agro e Sustentabilidade) */
-    --verde-claro: #2c6e49;           /* Verde folha para detalhes e sucesso */
-    --azul-hidro: #00a896;            /* Azul/Turquesa para água e elementos interativos */
-    --azul-claro: #e8f1f5;            /* Fundo suave para contraste */
-    --branco-puro: #ffffff;
-    --off-white: #f8f9fa;             /* Evita o cansaço visual no campo */
-    --texto-escuro: #2b2d42;
-    --texto-mutado: #6c757d;
-    --sombra-suave: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
-    --borda-vidro: 1px solid rgba(255, 255, 255, 0.18);
-    --transicao-suave: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --color-primary: #1b4d3e;
+    --color-secondary: #d4a373;
+    --color-accent: #e63946;
+    --color-bg-main: #f4f7f5;
+    --color-bg-card: #ffffff;
+    --color-text-main: #212529;
+    --color-text-muted: #495057;
+    --color-success: #2a9d8f;
+    
+    --radius-md: 8px;
+    --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.06);
+    --transition-fast: 0.25s ease;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 body {
-    background-color: var(--azul-claro);
-    color: var(--texto-escuro);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-/* ==========================================================================
-   2. TELA DE BLOQUEIO / BOAS-VINDAS (WELCOME SCREEN)
-   ========================================================================== */
-.bloqueio-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--verde-principal), var(--verde-claro));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    padding: 20px;
-}
-
-.bloqueio-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: var(--borda-vidro);
-    padding: 40px 30px;
-    border-radius: 24px;
-    width: 100%;
-    max-width: 450px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    animation: surgimentoCard 0.6s ease-out;
-}
-
-.bloqueio-mascote {
-    font-size: 4rem;
-    margin-bottom: 15px;
-    animation: puloMascote 2s infinite ease-in-out;
-}
-
-.bloqueio-card h2 {
-    color: var(--verde-principal);
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.bloqueio-card p {
-    color: var(--texto-mutado);
-    font-size: 0.95rem;
-    margin-bottom: 25px;
-    line-height: 1.4;
-}
-
-.bloqueio-rodape {
-    display: block;
-    margin-top: 25px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--verde-claro);
-}
-
-/* Estado escondido do app e efeito de sumir da tela de bloqueio */
-.app-escondido {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: var(--transicao-suave);
-    pointer-events: none;
-}
-
-.app-visivel {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.tela-sumir {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* ==========================================================================
-   3. ESTRUTURA BASE DA INTERFACE (HEADER, MAIN, FOOTER)
-   ========================================================================== */
-header {
-    background: linear-gradient(135deg, var(--verde-principal), #13382c);
-    color: var(--branco-puro);
-    padding: 40px 20px;
-    text-align: center;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    box-shadow: var(--sombra-suave);
-}
-
-.header-container h1 {
-    font-size: 2.5rem;
-    letter-spacing: -1px;
-    margin-bottom: 5px;
-}
-
-.header-container p {
-    font-size: 1rem;
-    opacity: 0.9;
-    font-weight: 300;
-}
-
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 20px 100px 20px; /* Espaço inferior para não cobrir o Senarito */
-}
-
-#introducao {
-    background: var(--branco-puro);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: var(--sombra-suave);
-    margin-bottom: 30px;
-    border-left: 5px solid var(--azul-hidro);
-}
-
-#introducao h2 {
-    color: var(--verde-principal);
-    margin-bottom: 10px;
-    font-size: 1.4rem;
-}
-
-#introducao p {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-main);
     line-height: 1.6;
-    color: var(--texto-escuro);
-}
-
-/* ==========================================================================
-   4. LAYOUT EM GRID E CARDS UTILITÁRIOS
-   ========================================================================== */
-.grid-ferramentas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-    margin-bottom: 30px;
-}
-
-.card-utilitario {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: var(--borda-vidro);
-    padding: 30px;
-    border-radius: 24px;
-    box-shadow: var(--sombra-suave);
-    transition: var(--transicao-suave);
-}
-
-.card-utilitario:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
-}
-
-.card-utilitario h2 {
-    color: var(--verde-principal);
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-}
-
-.card-utilitario p {
-    color: var(--texto-mutado);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-}
-
-/* Formulários e Elementos de Entrada */
-.campo-grupo {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-    text-align: left;
+    min-height: 100vh;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* Header & Menu Horizontal Principal */
+.main-header {
+    background-color: var(--color-primary);
+    color: var(--color-bg-card);
+    padding: 2rem 1rem 0 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-brand {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.header-brand h1 {
+    font-size: 2.4rem;
+    letter-spacing: 1px;
+}
+
+.header-brand p {
+    color: var(--color-secondary);
+    font-weight: 500;
+}
+
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    max-width: 950px;
+    margin: 0 auto;
+    overflow-x: auto; /* Garante rolagem se a tela for pequena (UX Mobile) */
+    white-space: nowrap;
+}
+
+.tab-button {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+.tab-button.active {
+    background-color: var(--color-bg-main);
+    color: var(--color-primary);
+    border-bottom: 4px solid var(--color-secondary);
+}
+
+/* ASSISTENTE DE VOZ BANNER */
+.assistant-banner {
+    max-width: 850px;
+    width: 92%;
+    margin: 1.5rem auto 0 auto;
+    background-color: #e2ece9;
+    border-left: 5px solid var(--color-primary);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.assistant-avatar {
+    font-size: 2rem;
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.assistant-speech p {
+    font-size: 0.95rem;
+    color: var(--color-primary);
+}
+
+/* Layout Principal */
+.main-content {
+    max-width: 850px;
+    width: 100%;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+    flex: 1;
+}
+
+.tab-content {
+    background-color: var(--color-bg-card);
+    padding: 2.2rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-content h2 {
+    color: var(--color-primary);
+    margin-bottom: 0.8rem;
+    font-size: 1.6rem;
+}
+
+.context-text {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Formulários e Inputs */
+#water-form, #rain-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 label {
-    font-size: 0.9rem;
     font-weight: 600;
-    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
 }
 
-input[type="text"],
-input[type="number"],
-select {
+input[type="number"], select {
     width: 100%;
-    padding: 14px 16px;
+    padding: 0.8rem;
     border: 2px solid #e2e8f0;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
-    background-color: var(--off-white);
-    color: var(--texto-escuro);
-    transition: var(--transicao-suave);
+    transition: border-color var(--transition-fast);
+}
+
+input[type="number"]:focus, select:focus {
     outline: none;
+    border-color: var(--color-primary);
 }
 
-input:focus, select:focus {
-    border-color: var(--azul-hidro);
-    background-color: var(--branco-puro);
-    box-shadow: 0 0 0 4px rgba(0, 168, 150, 0.15);
-}
-
-/* Botões Estilo Agrohackathon */
-button {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--azul-hidro), var(--verde-claro));
-    color: var(--branco-puro);
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: var(--transicao-suave);
-    box-shadow: 0 4px 15px rgba(0, 168, 150, 0.2);
-}
-
-button:hover {
-    filter: brightness(1.1);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 168, 150, 0.3);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-/* ==========================================================================
-   5. ANIMAÇÃO DE CARREGAMENTO (LOADING SPINNER)
-   ========================================================================== */
-.loading-container {
+.checkbox-container, .check-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-    animation: fadeIn 0.3s ease-in-out;
+    gap: 0.6rem;
+    margin-top: 0.2rem;
 }
 
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(0, 168, 150, 0.1);
-    border-left-color: var(--azul-hidro);
-    border-radius: 50%;
-    animation: rodar 1s linear infinite;
+.checkbox-container label, .check-item label {
+    cursor: pointer;
+    font-weight: 500;
 }
 
-.loading-container p {
-    font-style: italic;
-    color: var(--azul-hidro);
+#btn-calculate, #btn-calc-rain, .secondary-button, #btn-calc-consumer {
+    background-color: var(--color-primary);
+    color: var(--color-bg-card);
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
 }
 
-/* ==========================================================================
-   6. PAINEL DE RESULTADOS E COMPONENTES ESG
-   ========================================================================== */
-#resultados {
-    background: var(--branco-puro);
-    padding: 35px;
-    border-radius: 28px;
-    box-shadow: var(--sombra-suave);
-    margin-top: 10px;
-    animation: slideUp 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+#btn-calculate:hover, #btn-calc-rain:hover, .secondary-button:hover, #btn-calc-consumer:hover {
+    opacity: 0.9;
 }
 
-#resultados h2 {
-    color: var(--verde-principal);
-    margin-bottom: 25px;
-    font-size: 1.6rem;
-    border-bottom: 2px solid var(--off-white);
-    padding-bottom: 10px;
+.secondary-button {
+    background-color: var(--color-success);
 }
 
-.card-resultado {
-    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-    padding: 25px;
-    border-radius: 16px;
-    margin-bottom: 25px;
-    border: 1px solid #d1fae5;
+/* Boxes de Erros e Sucesso */
+.error-box {
+    background-color: #fee2e2;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    padding: 0.8rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.success-box {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #059669;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-top: 1.5rem;
+}
+
+/* Resultados e Gamificação */
+.results-container {
+    margin-top: 2rem;
+    border-top: 2px dashed #cbd5e1;
+    padding-top: 1.5rem;
+}
+
+.result-card {
+    background-color: var(--color-bg-main);
     text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border-left: 6px solid var(--color-secondary);
+    margin-bottom: 1.5rem;
 }
 
-#resultado-estimado p {
-    font-size: 1.2rem;
-    color: var(--texto-escuro);
-}
-
-#valor-pegada, #valor-chuva {
+.highlight-data {
     font-size: 2.2rem;
-    color: var(--verde-claro);
-    display: block;
-    margin: 10px 0;
     font-weight: 800;
+    color: var(--color-primary);
 }
 
-/* Barra de Progresso ESG */
-.barra-progresso-container {
-    margin-top: 20px;
-    text-align: left;
+.gamification-card {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+}
+
+.badge-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.4rem 0;
+}
+
+#esg-badge {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 4px;
 }
 
 progress {
     width: 100%;
-    height: 14px;
-    border-radius: 10px;
-    margin-top: 8px;
-    overflow: hidden;
-    border: none;
-    background-color: #e2e8f0;
-}
-
-progress::-webkit-progress-bar {
-    background-color: #e2e8f0;
-    border-radius: 10px;
-}
-
-progress::-webkit-progress-value {
-    background: linear-gradient(to right, #ef4444, #eab308, #22c55e);
-    border-radius: 10px;
-    transition: width 1s ease-in-out;
-}
-
-/* Recomendações e Impacto Cidade */
-.card-sugestoes, .card-impacto {
-    padding: 20px;
-    border-radius: 16px;
-    margin-bottom: 20px;
-    background-color: var(--off-white);
-}
-
-.card-sugestoes h3 { color: var(--verde-principal); margin-bottom: 15px; }
-.card-impacto h3 { color: #0284c7; margin-bottom: 10px; }
-
-#lista-sugestoes {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-#lista-sugestoes li {
-    background-color: var(--branco-puro);
-    padding: 14px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    border-left: 4px solid var(--verde-claro);
-    font-size: 0.95rem;
-    line-height: 1.4;
-}
-
-#resultado-chuva {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f0f9ff;
-    border-radius: 12px;
-    border: 1px solid #bae6fd;
-    text-align: center;
-    animation: fadeIn 0.4s ease;
-}
-
-/* ==========================================================================
-   7. WIDGET FLUTUANTE DO ASSISTENTE VIRTUAL (SENARITO)
-   ========================================================================== */
-.senarito-widget {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    z-index: 999;
-}
-
-.senarito-avatar {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--verde-claro), var(--verde-principal));
-    border: 3px solid var(--branco-puro);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    padding: 0;
-}
-
-.senarito-avatar:hover {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.emoji-avatar {
-    font-size: 2rem;
-}
-
-.notificacao-badge {
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    background-color: #ef4444;
-    color: var(--branco-puro);
-    font-size: 0.75rem;
-    font-weight: bold;
-    width: 20px;
     height: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid var(--branco-puro);
+    margin-top: 0.5rem;
 }
 
-.senarito-balao {
-    background: var(--branco-puro);
-    color: var(--texto-escuro);
-    padding: 16px 20px;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    max-width: 280px;
-    margin-bottom: 15px;
-    position: relative;
-    border: 1px solid rgba(0,0,0,0.05);
-    animation: slideUp 0.4s ease;
+.translations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-/* Seta do balão de conversa */
-.senarito-balao::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    right: 22px;
-    border-width: 10px 10px 0;
-    border-style: solid;
-    border-color: var(--branco-puro) transparent;
-    display: block;
-    width: 0;
+.translation-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+    border-radius: var(--radius-md);
 }
 
-.senarito-balao p {
-    font-size: 0.9rem;
-    line-height: 1.4;
+.placar-economia {
+    background-color: #fffbeb;
+    border: 1px solid #fef3c7;
+    color: #92400e;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
 }
 
-#btn-fechar-balao {
-    position: absolute;
-    top: 5px;
-    right: 8px;
-    background: none;
-    border: none;
-    color: var(--texto-mutated);
-    font-size: 1.2rem;
-    cursor: pointer;
-    width: auto;
-    padding: 0;
-    box-shadow: none;
+.esg-suggestions ul, .senar-links, .subtab-content ul {
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
 }
-#btn-fechar-balao:hover { transform: scale(1.1); box-shadow: none; }
 
-/* ==========================================================================
-   8. RODAPÉ INSTITUCIONAL
-   ========================================================================== */
-footer {
+.esg-suggestions li, .senar-links li, .subtab-content li {
+    margin-bottom: 0.5rem;
+    color: var(--color-text-muted);
+}
+
+.cert-box {
+    margin-top: 1rem;
+    background: #eff6ff;
+    border: 2px solid #bfdbfe;
+    padding: 1rem;
     text-align: center;
-    padding: 30px 20px;
-    color: var(--texto-mutado);
+    border-radius: var(--radius-md);
+}
+
+/* Checklist Governança */
+.gov-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+/* Quiz da Água Oculta */
+.quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-btn {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    padding: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+}
+
+.quiz-btn:hover {
+    background: #f1f5f9;
+    border-color: var(--color-primary);
+}
+
+.quiz-display-card {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.pedagogic-message {
+    font-style: italic;
+    color: var(--color-success);
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
+.consumer-calculator {
+    margin-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+}
+
+.consumer-text-output {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+/* MANUAL DE HIDROPONIA (Sub-Abas) */
+.subtab-navigation {
+    display: flex;
+    gap: 0.3rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.subtab-button {
+    background: #f1f5f9;
+    border: none;
+    padding: 0.5rem 1rem;
     font-size: 0.85rem;
-    line-height: 1.5;
-    background-color: rgba(0,0,0,0.02);
-    margin-top: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
 }
 
-/* ==========================================================================
-   9. ANIMAÇÕES CRONOMETRADAS (KEYFRAMES)
-   ========================================================================== */
-@keyframes surgimentoCard {
-    from { opacity: 0; transform: scale(0.9) translateY(30px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+.subtab-button.active {
+    background: var(--color-primary);
+    color: #fff;
 }
 
-@keyframes puloMascote {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.subtab-container {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid #e2e8f0;
 }
 
-@keyframes rodar {
-    to { transform: rotate(360deg); }
+.tip-card {
+    background: #edf2f7;
+    padding: 1rem;
+    border-radius: var(--radius-md);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   10. ADAPTAÇÃO PARA CELULARES (RESPONSIVIDADE)
-   ========================================================================== */
-@media (max-width: 480px) {
-    header { padding: 30px 15px; }
-    .header-container h1 { font-size: 2rem; }
-    .card-utilitario { padding: 20px; }
-    #resultados { padding: 20px; }
-    .senarito-widget { bottom: 20px; right: 20px; }
-    .senarito-balao { max-width: 230px; }
+/* Footer */
+.main-footer {
+    background-color: var(--color-primary);
+    color: #94a3b8;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+    margin-top: auto;
 }
