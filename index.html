@@ -13,9 +13,9 @@
         <p>Equilíbrio entre Produção e Meio Ambiente • Concurso Agrinho 2026</p>
         
         <nav class="tab-navigation">
-            <button class="tab-button active" data-target="aba-calculadora">Calculadora</button>
-            <button class="tab-button" data-target="aba-tabela">Tabela da Água</button>
-            <button class="tab-button" data-target="aba-plantacao">Manejo de Plantação</button>
+            <button type="button" class="tab-button active" data-target="aba-calculadora">Calculadora</button>
+            <button type="button" class="tab-button" data-target="aba-tabela">Tabela da Água</button>
+            <button type="button" class="tab-button" data-target="aba-plantacao">Manejo de Plantação</button>
         </nav>
     </header>
 
@@ -25,7 +25,7 @@
             <h2>Calculadora de Pegada Hídrica</h2>
             <p class="context-text">Insira os dados da sua propriedade para processar o consumo estimado com base nos manuais do SENAR-PR.</p>
             
-            <form id="water-form" novalidate>
+            <form id="water-form" onsubmit="return false;" novalidate>
                 <label for="activity-select">Selecione sua Atividade Principal:</label>
                 <select id="activity-select" required>
                     <option value="" disabled selected>-- Escolha uma opção --</option>
@@ -103,7 +103,7 @@
             <p class="context-text">Práticas recomendadas para alinhar a alta produtividade com a preservação dos recursos hídricos.</p>
             <div class="tip-card">
                 <h3>O Conceito de "Água Virtual"</h3>
-                <p>Você sabia que a maior parte da água utilizada na agricultura não fica na planta, mas evapora ou vira parte do ecossistema? Cuidar do solo com cobertura morta (Plantio Direto) evita que a água evapore sem necessidade!</p>
+                <p>Você sabia que a maior parte da água utilizada na agricultura não fica armazenada fisicamente na planta, mas evapora ou circula pelo ecossistema? Cuidar do solo com cobertura orgânica vegetal (Plantio Direto) evita que essa água evapore sem necessidade e economiza recursos valiosos!</p>
             </div>
         </section>
 
@@ -114,8 +114,5 @@
     </footer>
 
     <script src="script.js"></script>
-</body>
-</html>
-<script src="script.js" defer></script>
 </body>
 </html>
