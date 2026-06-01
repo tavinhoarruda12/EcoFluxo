@@ -1,88 +1,73 @@
-/* ==========================================================================
-   1. DICIONÁRIO DE DADOS (Base Científica)
-   ========================================================================== */
+// 1. DICIONÁRIO DE DADOS (Base Científica - SENAR-PR)
 const WATER_DATA = {
     soja: {
-        nome: "Soja",
         litros: 550000,
         sugestoes: [
-            "Adote o Plantio Direto para reter a humidade do solo.",
-            "Monitore a necessidade real do solo antes de ligar os pivôs."
+            "Adote o Plantio Direto para reter a umidade natural do solo.",
+            "Utilize sensores de manejo de irrigação para monitorar o estresse hídrico real."
         ],
-        impactoUrbano: "A água poupada em 1 hectare de soja eficiente abastece 3.500 pessoas na cidade por um dia!"
+        impacto: "Isso equivale ao consumo residencial diário de cerca de 3.500 pessoas na cidade!"
     },
     milho: {
-        nome: "Milho",
         litros: 600000,
         sugestoes: [
-            "Sincronize a irrigação com o regime de chuvas locais.",
-            "Faça irrigação noturna para evitar evaporação acelerada pelo sol."
+            "Sincronize a irrigação com o período crítico de florescimento e enchimento de grãos.",
+            "Faça rotação de culturas para aumentar a matéria orgânica e reter mais água."
         ],
-        impactoUrbano: "O manejo inteligente no milho poupa o equivalente a uma escola pública urbana inteira por 2 meses."
+        impacto: "Essa economia abasteceria uma escola pública urbana por até 2 meses!"
     },
     bovino: {
-        nome: "Bovinos de Leite",
         litros: 110,
         sugestoes: [
-            "Instale calhas para captar água da chuva nos telhados dos estábulos.",
-            "Reutilize a água de lavagem das salas de ordenha para limpar os pátios."
+            "Capte água da chuva nos telhados das instalações de ordenha.",
+            "Reutilize a água de lavagem para a limpeza inicial de pátios e fertirrigação."
         ],
-        impactoUrbano: "A reutilização de água na pecuária protege os mananciais que abastecem os bairros da cidade."
+        impacto: "Evita a sobrecarga dos mananciais que abastecem os municípios vizinhos!"
     },
     suino: {
-        nome: "Suínos",
         litros: 35,
         sugestoes: [
-            "Ajuste a altura das chupetas de água dos animais para evitar desperdício.",
-            "Faça a raspagem a seco dos dejetos antes de usar as mangueiras de pressão."
+            "Regule os bicos chupeta constantemente para evitar vazamentos.",
+            "Adote raspagem prévia dos dejetos a seco antes de usar mangueiras de pressão."
         ],
-        impactoUrbano: "Evitar perdas na suinocultura garante rios urbanos mais limpos e volumosos."
+        impacto: "Garante a segurança e pureza dos rios integrados campo-cidade."
     }
 };
 
-/* ==========================================================================
-   2. SISTEMA DE NAVEGAÇÃO POR ABAS (TABS)
-   ========================================================================== */
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
-
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove a classe ativa de todos os botões
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        // Oculta todas as secções
-        tabContents.forEach(content => {
-            content.hidden = true;
-            content.classList.remove('active-content');
-        });
-
-        // Ativa o botão clicado
-        button.classList.add('active');
-        
-        // Mostra a secção correspondente
-        const targetId = button.getAttribute('data-target');
-        const targetContent = document.getElementById(targetId);
-        targetContent.hidden = false;
-        targetContent.classList.add('active-content');
-    });
-});
-
-/* ==========================================================================
-   3. LÓGICA DA CALCULADORA E CORREÇÃO DE EXIBIÇÃO
-   ========================================================================== */
+// 2. ELEMENTOS DA INTERFACE (DOM)
 const form = document.querySelector('#water-form');
 const activitySelect = document.querySelector('#activity-select');
 const quantityInput = document.querySelector('#quantity-input');
 const btnCalculate = document.querySelector('#btn-calculate');
-
 const errorMessageBox = document.querySelector('#error-message-box');
 const resultsPanel = document.querySelector('#results-panel');
 const litersResult = document.querySelector('#liters-result');
 const suggestionsList = document.querySelector('#suggestions-list');
 const cityImpactText = document.querySelector('#city-impact-text');
 
+// Elementos de Navegação por Abas
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+// 3. LÓGICA DE NAVEGAÇÃO ENTRE ABAS
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove a classe ativa de todos os botões
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        // Esconde todos os conteúdos das abas
+        tabContents.forEach(content => content.hidden = true);
+
+        // Ativa o botão clicado
+        button.classList.add('active');
+        // Mostra o conteúdo correspondente
+        const targetId = button.getAttribute('data-target');
+        document.getElementById(targetId).hidden = false;
+    });
+});
+
+// 4. LÓGICA DA CALCULADORA E VALIDAÇÃO ESTRITA
 btnCalculate.addEventListener('click', () => {
-    // Reset de estados e esconde o painel para processar o novo clique
+    // Reseta estados visuais anteriores
     errorMessageBox.hidden = true;
     errorMessageBox.textContent = '';
     resultsPanel.hidden = true;
@@ -91,23 +76,41 @@ btnCalculate.addEventListener('click', () => {
     const quantityValue = quantityInput.value.trim();
     const quantity = Number(quantityValue);
 
-    // Validação Estrita diretamente na tela
+    // Validação Direta na Tela
     if (!selectedActivity) {
-        showError('Por favor, selecione uma atividade antes de calcular.');
+        showError('Por favor, selecione uma atividade agropecuária.');
         return;
     }
-    if (quantityValue === '' || isNaN(quantity)) {
-        showError('O campo de quantidade não pode ficar vazio.');
-        return;
-    }
-    if (quantity <= 0) {
-        showError('A quantidade deve ser um número maior que zero.');
+    if (quantityValue === '' || isNaN(quantity) || quantity <= 0) {
+        showError('Por favor, insira uma quantidade válida e maior que zero.');
         return;
     }
 
-    // Se passar na validação, executa o cálculo e EXIBE o painel
-    exibirResultados(selectedActivity, quantity);
+    // Se passar na validação, calcula e exibe
+    showResults(selectedActivity, quantity);
 });
 
-function showError(message) {
-    errorMessageBox.textContent =
+function showError(msg) {
+    errorMessageBox.textContent = msg;
+    errorMessageBox.hidden = false;
+}
+
+function showResults(activityKey, qty) {
+    const data = WATER_DATA[activityKey];
+    const totalWater = data.litros * qty;
+
+    // Renderiza dados na tela
+    litersResult.textContent = totalWater.toLocaleString('pt-BR') + " Litros";
+    cityImpactText.textContent = data.impacto;
+
+    // Renderiza lista de sugestões ESG
+    suggestionsList.innerHTML = '';
+    data.sugestoes.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        suggestionsList.appendChild(li);
+    });
+
+    // Exibe o painel de resultados removendo o hidden
+    resultsPanel.hidden = false;
+}
