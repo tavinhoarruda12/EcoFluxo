@@ -12,7 +12,7 @@ const WATER_DATA = {
         litros: 600000,
         sugestoes: [
             "Planeje as datas de plantio em conformidade com o Zoneamento Agrícola de Risco Climático (ZARC).",
-            "Proteja o solo realizando rotação de culturas para estruturar melhor as raízes e a capacidade de infiltração da água."
+            "Proteja o solo realizando rotação de culturas para estruturar melhor as raíces e a capacidade de infiltração da água."
         ],
         impacto: "A água poupada com tecnologia e monitoramento no milho é suficiente para abastecer uma escola pública urbana por até 2 meses!"
     },
@@ -34,7 +34,7 @@ const WATER_DATA = {
     }
 };
 
-// 2. AGUARDAR O CARREGAMENTO DO DOCUMENTO (Evita erros de carregamento assíncrono)
+// 2. AGUARDAR O CARREGAMENTO DO DOCUMENTO
 document.addEventListener('DOMContentLoaded', () => {
 
     // Seleção dos Componentes de Navegação
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tabButtons.forEach(btn => btn.classList.remove('active'));
             // Esconde todas as seções
             tabContents.forEach(content => content.hidden = true);
-
+            
             // Adiciona a classe 'active' no botão clicado
             button.classList.add('active');
             
