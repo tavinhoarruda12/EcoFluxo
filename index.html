@@ -3,11 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoFluxo - Calculadora de Pegada Hídrica</title>
+    <title>EcoFluxo - Pegada Hídrica</title>
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
-    <header>
-        <h1>EcoFluxo</h1>
-        <p>Gestão Inteligente e Sustentável
+    <header class="main-header">
+        <h1>EcoFluxo 💧</h1>
+        <p>Gestão Inteligente de Recursos Hídricos - Base SENAR-PR</p>
+    </header>
+
+    <nav class="tab-navigation">
+        <button class="tab-button active" data-target="aba-calculadora">Calculadora</button>
+        <button class="tab-button" data-target="aba-sobre">Sobre o Projeto</button>
+    </nav>
+
+    <main class="container">
+        <section id="aba-calculadora" class="tab-content">
+            <div class="card">
+                <h2>Calculadora de Impacto Hídrico</h2>
+                <p>Insira os dados da sua produção para calcular o consumo estimado de água.</p>
+                
+                <div class="form-group">
+                    <label for="activity-select">Atividade Agropecuária:</label>
+                    <select id="activity-select">
+                        <option value="">-- Selecione uma atividade --</option>
+                        <option value="soja">Soja (por Hectare)</option>
+                        <option value="milho">Milho (por Hectare)</option>
+                        <option value="bovino">Bovino de Leite (por Cabeça/Dia)</option>
+                        <option value="suino">Suíno (por Cabeça/Dia)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity-input">Quantidade (Hectares ou Animais):</label>
+                    <input type="number" id="quantity-input" placeholder="Ex: 10" min="1">
+                </div>
+
+                <button id="btn-calculate" class="btn-main">Calcular Pegada Hídrica</button>
+
+                <div id="error-message-box" class="error-box" hidden></div>
+
+                <div id="results-panel" class="results-box" hidden>
+                    <h3>Resultado da Análise</h3>
+                    <div class="result-value">
+                        <span id="liters-result">0 Litros</span>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4>Contexto de Impacto Social:</h4>
+                        <p id="city-impact-text"></p>
+                    </div>
+
+                    <div class="suggestions-section">
+                        <h4>Sugestões de Manejo ESG:</h4>
+                        <ul id="suggestions-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-sobre" class="tab-content" hidden>
+            <div class="card">
+                <h2>Sobre o EcoFluxo</h2>
+                <p>Este projeto foi desenvolvido com base nas diretrizes e dados de pesquisa do <strong>SENAR-PR</strong>.</p>
+                <p>O objetivo é conscientizar e fornecer ferramentas práticas para que produtores rurais possam mensurar o impacto do uso da água e adotar práticas sustentáveis (ESG) no campo.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
