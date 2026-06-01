@@ -3,44 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoFluxo - Gestão Hídrica e Agro Sustentável</title>
+    <title>EcoFluxo - Sustentabilidade Agropecuária</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="main-header">
         <h1>EcoFluxo</h1>
-        <p>Tecnologia e Sustentabilidade: Unindo o Campo e a Cidade</p>
+        <p>Equilíbrio entre Produção e Meio Ambiente • Concurso Agrinho 2026</p>
         
-        <nav class="nav-tabs">
+        <nav class="tab-navigation">
             <button class="tab-button active" data-target="aba-calculadora">Calculadora</button>
             <button class="tab-button" data-target="aba-tabela">Tabela da Água</button>
-            <button class="tab-button" data-target="aba-plantacao">Guia de Plantações</button>
+            <button class="tab-button" data-target="aba-plantacao">Manejo de Plantação</button>
         </nav>
     </header>
 
     <main class="main-content">
 
-        <section id="aba-calculadora" class="tab-content active-content">
-            <h2>Calculadora Interativa de Pegada Hídrica</h2>
-            <p class="context-text">Insira os dados da sua produção para calcular o consumo estimado com base nos manuais do SENAR-PR.</p>
+        <section id="aba-calculadora" class="tab-content">
+            <h2>Calculadora de Pegada Hídrica</h2>
+            <p class="context-text">Insira os dados da sua propriedade para processar o consumo estimado com base nos manuais do SENAR-PR.</p>
             
             <form id="water-form" novalidate>
-                <label for="activity-select">Selecione a Atividade Principal:</label>
+                <label for="activity-select">Selecione sua Atividade Principal:</label>
                 <select id="activity-select" required>
                     <option value="" disabled selected>-- Escolha uma opção --</option>
-                    <optgroup label="Agricultura">
-                        <option value="soja">Soja (por hectare)</option>
-                        <option value="milho">Milho (por hectare)</option>
-                    </optgroup>
-                    <optgroup label="Pecuária">
-                        <option value="bovino">Bovinos de Leite (por cabeça)</option>
-                        <option value="suino">Suínos (por cabeça)</option>
-                    </optgroup>
+                    <option value="soja">Soja (por hectare)</option>
+                    <option value="milho">Milho (por hectare)</option>
+                    <option value="bovino">Bovinos de Leite (por cabeça)</option>
+                    <option value="suino">Suínos (por cabeça)</option>
                 </select>
 
-                <label for="quantity-input">Quantidade (Hectares ou Cabeças):</label>
-                <input type="number" id="quantity-input" placeholder="Ex: 50" required min="1">
+                <label for="quantity-input">Quantidade (Hectares ou Animais):</label>
+                <input type="number" id="quantity-input" placeholder="Ex: 50" min="1" required>
 
                 <button type="button" id="btn-calculate">Processar Pegada Hídrica</button>
             </form>
@@ -49,7 +45,7 @@
 
             <div id="results-panel" class="results-container" hidden>
                 <article class="result-card">
-                    <h3>Sua Pegada Hídrica Estimada</h3>
+                    <h3>Pegada Hídrica Total Estimada</h3>
                     <p id="liters-result" class="highlight-data">0 litros</p>
                 </article>
 
@@ -67,67 +63,54 @@
 
         <section id="aba-tabela" class="tab-content" hidden>
             <h2>Tabela de Referência Hídrica</h2>
-            <p class="context-text">Dados técnicos baseados nas médias de consumo recomendadas para o Estado do Paraná.</p>
+            <p class="context-text">Dados técnicos oficiais sobre o consumo médio padrão das principais atividades do Paraná.</p>
             
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Cultivo / Criação</th>
-                            <th>Consumo Padrão Base</th>
-                            <th>Unidade de Medida</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Soja</td>
-                            <td>550.000 Litros</td>
-                            <td>Por Hectare (Ciclo)</td>
-                        </tr>
-                        <tr>
-                            <td>Milho</td>
-                            <td>600.000 Litros</td>
-                            <td>Por Hectare (Ciclo)</td>
-                        </tr>
-                        <tr>
-                            <td>Bovinos de Leite</td>
-                            <td>110 Litros</td>
-                            <td>Por Cabeça / Dia</td>
-                        </tr>
-                        <tr>
-                            <td>Suínos</td>
-                            <td>35 Litros</td>
-                            <td>Por Cabeça / Dia</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Cultura / Atividade</th>
+                        <th>Consumo Médio Padrão</th>
+                        <th>Tipo de Unidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Soja</strong></td>
+                        <td>550.000 Litros</td>
+                        <td>Por Hectare / Ciclo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Milho</strong></td>
+                        <td>600.000 Litros</td>
+                        <td>Por Hectare / Ciclo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bovinos de Leite</strong></td>
+                        <td>110 Litros</td>
+                        <td>Por Cabeça / Dia</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suínos</strong></td>
+                        <td>35 Litros</td>
+                        <td>Por Cabeça / Dia</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
         <section id="aba-plantacao" class="tab-content" hidden>
-            <h2>Guia de Plantações Sustentáveis</h2>
-            <p class="context-text">Entenda o ciclo técnico dos principais cultivos do Paraná e como otimizar o uso da água.</p>
-            
-            <div class="cards-grid">
-                <article class="plant-card">
-                    <h3>Cultura da Soja</h3>
-                    <p><strong>Fase Crítica:</strong> Floração e enchimento de grãos exigem o máximo de atenção hídrica.</p>
-                    <p><strong>Dica Técnica:</strong> O uso de cobertura morta no solo (Plantio Direto) reduz a evaporação da água em até 30%.</p>
-                </article>
-
-                <article class="plant-card">
-                    <h3>Cultura do Milho</h3>
-                    <p><strong>Fase Crítica:</strong> O período de pendoamento e início da formação da espiga não pode sofrer estiagem.</p>
-                    <p><strong>Dica Técnica:</strong> Sistemas de irrigação noturna evitam a perda de água por evaporação devido ao calor do sol.</p>
-                </article>
+            <h2>Manejo Inteligente de Plantação</h2>
+            <p class="context-text">Práticas recomendadas para alinhar a alta produtividade com a preservação dos recursos hídricos.</p>
+            <div class="tip-card">
+                <h3>O Conceito de "Água Virtual"</h3>
+                <p>Você sabia que a maior parte da água utilizada na agricultura não fica na planta, mas evapora ou vira parte do ecossistema? Cuidar do solo com cobertura morta (Plantio Direto) evita que a água evapore sem necessidade!</p>
             </div>
         </section>
 
     </main>
 
     <footer class="main-footer">
-        <p>EcoFluxo &copy; 2026 - Desenvolvido para o Concurso Agrinho (30 Anos de Inovação).</p>
-        <p>Rede Estadual de Ensino do Paraná</p>
+        <p>EcoFluxo &copy; 2026 - Concurso Agrinho (30 Anos de Orgulho Agro).</p>
     </footer>
 
     <script src="script.js"></script>
