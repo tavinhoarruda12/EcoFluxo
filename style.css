@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. CONFIGURAÇÕES GERAIS E VARIÁVEIS (DESIGN SYSTEM)
+   ========================================================================== */
 :root {
     --color-primary: #1b4d3e;
     --color-secondary: #d4a373;
@@ -29,11 +32,14 @@ body {
     min-height: 100vh;
 }
 
+/* REGRA CRÍTICA: Garante que as abas escondidas sumam de verdade */
 [hidden] {
     display: none !important;
 }
 
-/* Header & Menu Horizontal Principal */
+/* ==========================================================================
+   2. HEADER & MENU HORIZONTAL PRINCIPAL
+   ========================================================================== */
 .main-header {
     background-color: var(--color-primary);
     color: var(--color-bg-card);
@@ -62,7 +68,7 @@ body {
     gap: 0.3rem;
     max-width: 950px;
     margin: 0 auto;
-    overflow-x: auto;
+    overflow-x: auto; /* Permite arrastar o menu no celular */
     white-space: nowrap;
 }
 
@@ -90,7 +96,9 @@ body {
     border-bottom: 4px solid var(--color-secondary);
 }
 
-/* ASSISTENTE DE VOZ BANNER */
+/* ==========================================================================
+   3. BANNER DO ASSISTENTE VIRTUAL (SENARITO)
+   ========================================================================== */
 .assistant-banner {
     max-width: 850px;
     width: 92%;
@@ -117,7 +125,9 @@ body {
     color: var(--color-primary);
 }
 
-/* Layout Principal */
+/* ==========================================================================
+   4. LAYOUT PRINCIPAL E ELEMENTOS DE CONTEÚDO
+   ========================================================================== */
 .main-content {
     max-width: 850px;
     width: 100%;
@@ -145,7 +155,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-/* Formulários e Inputs */
+/* FORMULÁRIOS E INPUTS */
 #water-form, #rain-form {
     display: flex;
     flex-direction: column;
@@ -172,18 +182,7 @@ input[type="number"]:focus, select:focus {
     border-color: var(--color-primary);
 }
 
-.checkbox-container, .check-item {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 0.2rem;
-}
-
-.checkbox-container label, .check-item label {
-    cursor: pointer;
-    font-weight: 500;
-}
-
+/* BOTÕES */
 #btn-calculate, #btn-calc-rain, .secondary-button, #btn-calc-consumer {
     background-color: var(--color-primary);
     color: var(--color-bg-card);
@@ -204,27 +203,9 @@ input[type="number"]:focus, select:focus {
     background-color: var(--color-success);
 }
 
-/* Boxes de Erros e Sucesso */
-.error-box {
-    background-color: #fee2e2;
-    color: var(--color-accent);
-    border: 1px solid var(--color-accent);
-    padding: 0.8rem;
-    border-radius: var(--radius-md);
-    margin-top: 1rem;
-    font-weight: 600;
-}
-
-.success-box {
-    background-color: #d1fae5;
-    color: #065f46;
-    border: 1px solid #059669;
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    margin-top: 1.5rem;
-}
-
-/* Resultados e Gamificação */
+/* ==========================================================================
+   5. COMPONENTES VISUAIS DE RESULTADOS
+   ========================================================================== */
 .results-container {
     margin-top: 2rem;
     border-top: 2px dashed #cbd5e1;
@@ -296,14 +277,36 @@ progress {
     margin-bottom: 1.5rem;
 }
 
-.esg-suggestions ul, .senar-links, .subtab-content ul {
+.esg-suggestions ul, .subtab-content ul {
     padding-left: 1.2rem;
     margin-top: 0.5rem;
 }
 
-.esg-suggestions li, .senar-links li, .subtab-content li {
+.esg-suggestions li, .subtab-content li {
     margin-bottom: 0.5rem;
     color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   6. CHECKLIST E QUIZ DA ÁGUA VIRTUAL
+   ========================================================================== */
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+.check-item label {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.gov-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 .cert-box {
@@ -315,15 +318,6 @@ progress {
     border-radius: var(--radius-md);
 }
 
-/* Checklist Governança */
-.gov-checklist {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-}
-
-/* Quiz da Água Oculta */
 .quiz-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -362,19 +356,21 @@ progress {
     font-weight: 600;
 }
 
-.consumer-calculator {
-    margin-top: 2rem;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 1.5rem;
-}
-
 .consumer-text-output {
     margin-top: 1rem;
     font-weight: bold;
     color: var(--color-primary);
 }
 
-/* MANUAL DE HIDROPONIA (Sub-Abas) */
+.consumer-calculator {
+    margin-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+}
+
+/* ==========================================================================
+   7. MANUAL DE HIDROPONIA (SUB-ABAS)
+   ========================================================================== */
 .subtab-navigation {
     display: flex;
     gap: 0.3rem;
@@ -413,7 +409,9 @@ progress {
     border-radius: var(--radius-md);
 }
 
-/* Footer */
+/* ==========================================================================
+   8. FOOTER
+   ========================================================================== */
 .main-footer {
     background-color: var(--color-primary);
     color: #94a3b8;
