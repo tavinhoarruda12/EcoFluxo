@@ -3,190 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoFluxo - Sustentabilidade Hídrica | Concurso Agrinho</title>
+    <title>EcoFluxo - Inteligência Hídrica e Agroecologia</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="header-brand">
-            <h1>EcoFluxo</h1>
-            <p>Tecnologia e Sustentabilidade de Mãos Dadas com o Produtor Rural</p>
-        </div>
-
-        <nav class="tab-navigation">
-            <button class="tab-button active" data-aba="aba-produtor">📊 Produtor Rural</button>
-            <button class="tab-button" data-aba="aba-consumidor">🏙️ Consumidor Urbano</button>
-            <button class="tab-button" data-aba="aba-quiz">💡 Quiz da Água</button>
-            <button class="tab-button" data-aba="aba-governanca">📜 Governança ESG</button>
-            <button class="tab-button" data-aba="aba-hidroponia">🌱 Manual de Hidroponia</button>
-        </nav>
-    </header>
-
-    <div class="assistant-banner">
-        <div class="assistant-avatar">🤠</div>
-        <div class="assistant-speech">
-            <p id="fala-senarito">Olá! Sou o <strong>Senarito</strong>. Use as abas acima para navegar por todas as ferramentas do nosso ecossistema sustentável!</p>
+    <div id="tela-bloqueio" class="bloqueio-overlay">
+        <div class="bloqueio-card">
+            <div class="bloqueio-mascote">🤠</div>
+            <h2>Bem-vindo ao EcoFluxo!</h2>
+            <p>Descubra o poder da sustentabilidade no campo e na cidade. Insira seu nome para iniciar a experiência do Agrinho 30 Anos:</p>
+            <div class="campo-grupo">
+                <input type="text" id="nome-usuario" placeholder="Digite seu nome aqui..." required>
+            </div>
+            <button type="button" id="btn-entrar-app">Entrar no Ecossistema</button>
+            <span class="bloqueio-rodape">Sistema FAEP / SENAR-PR</span>
         </div>
     </div>
 
-    <main class="main-content">
-
-        <section id="aba-produtor" class="tab-content">
-            <h2>Calculadora do Produtor Rural</h2>
-            <p class="context-text">Base científica com dados do SENAR-PR para estimar o consumo hídrico do seu manejo.</p>
-            
-            <form id="water-form" onsubmit="event.preventDefault();">
-                <label for="atividade">Selecione sua Atividade:</label>
-                <select id="atividade" required>
-                    <option value="" disabled selected>-- Escolha uma opção --</option>
-                    <option value="soja">🌾 Soja (por Hectare)</option>
-                    <option value="milho">🌽 Milho (por Hectare)</option>
-                    <option value="cafe">☕ Café (por Hectare)</option>
-                    <option value="bovino">🥛 Bovinos de Leite (por Cabeça)</option>
-                    <option value="suino">🐷 Suinocultura (por Cabeça)</option>
-                </select>
-
-                <label for="quantidade">Quantidade (Hectares ou Animais):</label>
-                <input type="number" id="quantidade" min="1" placeholder="Ex: 100" required>
-
-                <button type="button" id="btn-calculate">Processar Dados do Manejo</button>
-            </form>
-
-            <div id="resultados-produtor" class="results-container" hidden>
-                <div class="result-card">
-                    <p>Sua pegada hídrica estimada é de:</p>
-                    <p class="highlight-data"><span id="valor-pegada">0</span> Litros</p>
-                </div>
-
-                <div class="gamification-card">
-                    <p class="badge-display">Selo ESG Atual: <span id="esg-badge">Analisando...</span></p>
-                    <progress id="barra-esg" value="0" max="100"></progress>
-                </div>
-
-                <div class="esg-suggestions">
-                    <h3>💡 Recomendações do SENAR-PR para Economia:</h3>
-                    <ul id="lista-sugestoes">
-                        </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="aba-consumidor" class="tab-content" hidden>
-            <h2>Calculadora do Consumidor Urbano</h2>
-            <p class="context-text">Veja quanta água foi gerenciada no campo para produzir o que chega à sua mesa na cidade.</p>
-            
-            <div class="translations-grid">
-                <div class="translation-item">
-                    <label for="leite-consumo">Copos de Leite por semana:</label>
-                    <input type="number" id="leite-consumo" min="0" value="0">
-                </div>
-                <div class="translation-item">
-                    <label for="cafe-consumo">Xícaras de Café por semana:</label>
-                    <input type="number" id="cafe-consumo" min="0" value="0">
-                </div>
-            </div>
-            
-            <button type="button" id="btn-calc-consumer">Calcular Pegada Hídrica do meu Almoço</button>
-            
-            <p id="resultado-consumidor" class="consumer-text-output" hidden></p>
-            
-            <div class="consumer-calculator">
-                <h3>🌧️ Calculador de Captação de Chuva (Cisternas)</h3>
-                <p class="context-text">Descubra o potencial de captação gratuita de água no telhado do seu barracão ou residência.</p>
-                <form id="rain-form" onsubmit="event.preventDefault();">
-                    <label for="area-telhado">Área do Telhado (em m²):</label>
-                    <input type="number" id="area-telhado" min="1" placeholder="Ex: 150">
-                    <button type="button" id="btn-calc-rain">Calcular Potencial</button>
-                </form>
-                <div id="resultado-chuva" class="placar-economia" hidden>
-                    <p>Potencial estimado: <strong><span id="valor-chuva">0</span> litros</strong> de água coletados por ano!</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="aba-quiz" class="tab-content" hidden>
-            <h2>Quiz da Água Oculta (Água Virtual)</h2>
-            <p class="context-text">Você sabe quanta água é necessária para produzir os itens do nosso dia a dia? Descubra clicando abaixo:</p>
-            
-            <div class="quiz-grid">
-                <button type="button" class="quiz-btn" data-litros="130" data-item="uma única xícara de café">☕ Xícara de Café</button>
-                <button type="button" class="quiz-btn" data-litros="2500" data-item="uma camiseta de algodão">👕 Camiseta de Algodão</button>
-                <button type="button" class="quiz-btn" data-litros="15000" data-item="um quilo de carne bovina">🥩 1kg de Carne Bovina</button>
+    <div id="conteudo-aplicativo" class="app-escondido">
+        
+        <header class="main-header">
+            <div class="header-brand">
+                <h1>EcoFluxo</h1>
+                <p>Tecnologia, Governança ESG e Permacultura no Paraná</p>
             </div>
 
-            <div id="quiz-display" class="quiz-display-card" hidden>
-                <p id="quiz-texto-resultado"></p>
-                <p class="pedagogic-message">💡 Economizar ou evitar o desperdício de produtos também economiza a água do campo!</p>
-            </div>
-        </section>
-
-        <section id="aba-governanca" class="tab-content" hidden>
-            <h2>Checklist de Governança Hídrica</h2>
-            <p class="context-text">O pilar "G" do ESG avalia a regularização legal e proteção dos recursos hídricos da propriedade rural.</p>
-            
-            <div class="gov-checklist">
-                <div class="check-item">
-                    <input type="checkbox" id="gov-car">
-                    <label for="gov-car">Possui Cadastro Ambiental Rural (CAR) ativo e regularizado?</label>
-                </div>
-                <div class="check-item">
-                    <input type="checkbox" id="gov-outorga">
-                    <label for="gov-outorga">Possui Outorga ou Dispensa de direito de uso de água para captação?</label>
-                </div>
-                <div class="check-item">
-                    <input type="checkbox" id="gov-app">
-                    <label for="gov-app">As Áreas de Preservação Permanente (APPs) e matas ciliares estão isoladas e protegidas?</label>
-                </div>
-            </div>
-
-            <button type="button" class="secondary-button" id="btn-validar-gov">Verificar Status de Governança</button>
-
-            <div id="resultado-gov" class="cert-box" hidden>
-                <p id="texto-gov"></p>
-            </div>
-        </section>
-
-        <section id="aba-hidroponia" class="tab-content" hidden>
-            <h2>🌱 Manual Técnico de Hidroponia</h2>
-            <p class="context-text">Um exemplo prático e tecnológico de economia hídrica que poupa até 90% de água em relação ao cultivo tradicional.</p>
-            
-            <nav class="subtab-navigation">
-                <button class="subtab-button active" data-subaba="sub-conceito">O que é?</button>
-                <button class="subtab-button" data-subaba="sub-vantagens">Vantagens ESG</button>
-                <button class="subtab-button" data-subaba="sub-senar">Dicas Técnicas</button>
+            <nav class="tab-navigation">
+                <button class="tab-button active" data-aba="aba-produtor">📊 Produtor Rural</button>
+                <button class="tab-button" data-aba="aba-circular">🔄 Agroecologia Circular</button>
+                <button class="tab-button" data-aba="aba-consumidor">🏙️ Consumidor Urbano</button>
+                <button class="tab-button" data-aba="aba-quiz">💡 Quiz da Água</button>
+                <button class="tab-button" data-aba="aba-governanca">📜 Governança ESG</button>
+                <button class="tab-button" data-aba="aba-hidroponia">🌱 Hidroponia</button>
             </nav>
+        </header>
 
-            <div class="subtab-container">
-                <div id="sub-conceito" class="subtab-content">
-                    <h3>Cultivo Sem Solo</h3>
-                    <p>A hidroponia é uma técnica onde as plantas crescem com as raízes imersas em uma solução de água com os nutrientes exatos de que precisam. A água circula por perfis de PVC em um circuito fechado.</p>
-                </div>
+        <div class="assistant-banner">
+            <div class="assistant-avatar">🤠</div>
+            <div class="assistant-speech">
+                <p id="fala-senarito">Olá! Vamos desenhar uma propriedade sustentável nota 10? Use as abas acima para navegar pelas ferramentas!</p>
+            </div>
+        </div>
 
-                <div id="sub-vantagens" class="subtab-content" hidden>
-                    <h3>Sustentabilidade em Números</h3>
-                    <ul>
-                        <li><strong>Economia Máxima:</strong> Reduz em até 90% o uso de água pois não há perda por infiltração profunda no solo.</li>
-                        <li><strong>Espaço Otimizado:</strong> Produção verticalizada e constante o ano todo.</li>
-                        <li><strong>Controle de Insumos:</strong> Uso racional e localizado de nutrientes minerais.</li>
-                    </ul>
-                </div>
+        <main class="main-content">
 
-                <div id="sub-senar" class="subtab-content" hidden>
-                    <div class="tip-card">
-                        <h3>📋 Boletim Técnico do SENAR-PR:</h3>
-                        <p>Para o sucesso da hidroponia, o produtor deve monitorar rigorosamente duas vezes ao dia o <strong>pH da água</strong> (mantendo entre 5.5 e 6.5) e a <strong>condutividade elétrica (CE)</strong>, garantindo que as plantas absorvam os nutrientes corretamente.</p>
+            <section id="aba-produtor" class="tab-content">
+                <h2>Calculadora do Produtor Rural</h2>
+                <p class="context-text">Estime a pegada hídrica do seu manejo com base nos dados técnicos do SENAR-PR.</p>
+                
+                <form id="water-form" onsubmit="event.preventDefault();">
+                    <label for="atividade">Selecione sua Atividade:</label>
+                    <select id="atividade" required>
+                        <option value="" disabled selected>-- Escolha uma opção --</option>
+                        <option value="soja">🌾 Soja (por Hectare)</option>
+                        <option value="milho">🌽 Milho (por Hectare)</option>
+                        <option value="cafe">☕ Café (por Hectare)</option>
+                        <option value="bovino">🥛 Bovinos de Leite (por Cabeça)</option>
+                        <option value="suino">🐷 Suinocultura (por Cabeça)</option>
+                    </select>
+
+                    <label for="quantidade">Quantidade (Hectares ou Animais):</label>
+                    <input type="number" id="quantidade" min="1" placeholder="Ex: 150" required>
+
+                    <button type="button" id="btn-calculate">Processar Dados do Manejo</button>
+                </form>
+
+                <div id="resultados-produtor" class="results-container" hidden>
+                    <div class="result-card">
+                        <p>Sua pegada hídrica estimada é de:</p>
+                        <p class="highlight-data"><span id="valor-pegada">0</span> Litros</p>
+                    </div>
+
+                    <div class="gamification-card">
+                        <p class="badge-display">Selo ESG Atual: <span id="esg-badge">Analisando...</span></p>
+                        <progress id="barra-esg" value="0" max="100"></progress>
+                    </div>
+
+                    <div class="esg-suggestions">
+                        <h3>💡 Recomendações Técnicas Customizadas:</h3>
+                        <ul id="lista-sugestoes"></ul>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-    </main>
+            <section id="aba-circular" class="tab-content" hidden>
+                <h2>Propriedade Tecnológica & Agroecologia Circular</h2>
+                <p class="context-text">Explore os pilares da permacultura para fechar os ciclos de recursos (água, energia e resíduos).</p>
+                
+                <nav class="subtab-navigation">
+                    <button class="subtab-button active" data-subaba="circ-agua">💧 Água & Ciclagem</button>
+                    <button class="subtab-button" data-subaba="circ-energia">⚡ Energia & Adubos</button>
+                    <button class="subtab-button" data-subaba="circ-integracao">🌳 Integração (SAFs)</button>
+                    <button class="subtab-button" data-subaba="circ-renda">💰 Renda & Turismo</button>
+                </nav>
 
-    <footer class="main-footer">
-        <p>&copy; 2026 EcoFluxo - Projeto Desenvolvido para o Concurso Agrinho (30 Anos).</p>
-        <p>Base de dados científicos orientada pelos Manuais Técnicos do Sistema FAEP/SENAR-PR.</p>
-    </footer>
+                <div class="subtab-container">
+                    <div id="circ-agua" class="subtab-content">
+                        <h3>Manejo Inteligente de Recursos Hídricos</h3>
+                        <ul>
+                            <li><strong>Captação por Gravidade:</strong> Calhas conduzem a água da chuva diretamente para as hortas e torneiras, cortando custos com bombas elétricas e poupando energia.</li>
+                            <li><strong>Reuso de Águas Cinzas (Biorretenção):</strong> A água de pias e chuveiros passa por filtragem natural (pedras, bananeiras e macrófitas), sendo limpa naturalmente antes de infiltrar no solo ou irrigar plantações.</li>
+                        </ul>
+                    </div>
+
+                    <div id="circ-energia" class="subtab-content" hidden>
+                        <h3>Fluxo Autônomo de Nutrientes</h3>
+                        <ul>
+                            <li><strong>Biodigestores Familiares:</strong> Dejetos animais e restos de cozinha viram biogás para cozinhar e biofertilizante líquido concentrado de alta qualidade para as lavouras.</li>
+                            <li><strong>Compostagem em Leiras:</strong> Técnica de compostagem eficiente que transforma restos orgânicos e palhadas no principal insumo para a adubação verde.</li>
+                        </ul>
+                    </div>
+
+                    <div id="circ-integracao" class="subtab-content" hidden>
+                        <h3>Sistemas Agroflorestais e Conexão Ecológica</h3>
+                        <p>O fim da monocultura convencional. Ao consorciar árvores nativas com plantações de alimentos (SAFs), a umidade do solo aumenta, barreiras de vento naturais (cercas vivas) são criadas e os polinizadores ganham abrigo seguro.</p>
+                        <div class="tip-card" style="margin-top: 10px;">
+                            <strong>Integração Animal:</strong> Utilização do esterco de galinhas ou gado diretamente no enriquecimento orgânico do solo da horta e na produção de biometano.
+                        </div>
+                    </div>
+
+                    <div id="circ-renda" class="subtab-content" hidden>
+                        <h3>Agroecologia como Modelo de Negócio</h3>
+                        <ul>
+                            <li><strong>Eco-Hospedagem e Turismo Rural:</strong> Transformação de espaços ociosos em chalés ecológicos, oferecendo aos turistas a experiência imersiva da vida no campo, vivências na horta e consumo de alimentos agroecológicos.</li>
+                            <li><strong>Cooperativismo Verde:</strong> Redes locais de agricultores unidas para obter créditos sustentáveis facilitados (como para instalação de placas solares) e garantir comércio justo.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aba-consumidor" class="tab-content" hidden>
+                <h2>Calculadora do Consumidor Urbano</h2>
+                <p class="context-text">Descubra o fluxo de água virtual necessário para os alimentos que chegam até a cidade.</p>
+                
+                <div class="translations-grid">
+                    <div class="translation-item">
+                        <label for="leite-consumo">Copos de Leite por semana:</label>
+                        <input type="number" id="leite-consumo" min="0" value="0">
+                    </div>
+                    <div class="translation-item">
+                        <label for="cafe-consumo">Xícaras de Café por semana:</label>
+                        <input type="number" id="cafe-consumo" min="0" value="0">
+                    </div>
+                </div>
+                
+                <button type="button" id="btn-calc-consumer">Calcular Impacto do meu Consumo</button>
+                <p id="resultado-consumidor" class="consumer-text-output" hidden></p>
+                
+                <div class="consumer-calculator">
+                    <h3>🌧️ Potencial de Captação de Chuva para Cisternas</h3>
+                    <p class="context-text">Descubra o volume anual de captação gratuita com base na área de telhado.</p>
+                    <form id="rain-form" onsubmit="event.preventDefault();">
+                        <label for="area-telhado">Área Coberta do Telhado (m²):</label>
+                        <input type="number" id="area-telhado" min="1" placeholder="Ex: 100">
+                        <button type="button" id="btn-calc-rain">Calcular Coleta Pluvial</button>
+                    </form>
+                    <div id="resultado-chuva" class="placar-economia" hidden>
+                        <p>Seu espaço consegue reter cerca de: <strong><span id="valor-chuva">0</span> litros</strong> de água por ano!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aba-quiz" class="tab-content" hidden>
+                <h2>Quiz da Água Virtual (Desafio dos Litros Invisíveis)</h2>
+                <p class="context-text">Você sabe quanta água é necessária para fabricar os itens do nosso dia a dia? Descubra clicando abaixo:</p>
+                <div class="quiz-grid">
+                    <button type="button" class="quiz-btn" data-litros="130" data-item="uma única xícara de café">☕ Xícara de Café</button>
+                    <button type="button" class="quiz-btn" data-litros="2500" data-item="uma camiseta de algodão">👕 Camiseta de Algodão</button>
+                    <button type="button" class="quiz-btn" data-litros="15000" data-item="um quilo de carne bovina">🥩 1kg de Carne Bovina</button>
+                </div>
+                <div id="quiz-display" class="quiz-display-card" hidden>
+                    <p id="quiz-texto-resultado"></p>
+                    <p class="pedagogic-message">💡 Evitar desperdícios na cidade protege as reservas de água gerenciadas pelo campo!</p>
+                </div>
+            </section>
+
+            <section id="aba-governanca" class="tab-content" hidden>
+                <h2>Checklist de Governança Hídrica e Ambiental</h2>
+                <p class="context-text">Exigências institucionais essenciais e critérios técnicos de regularização ambiental.</p>
+                <div class="gov-checklist">
+                    <div class="check-item">
+                        <input type="checkbox" id="gov-car">
+                        <label for="gov-car">Inscrição no Cadastro Ambiental Rural (CAR) regularizada?</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="gov-outorga">
+                        <label for="gov-outorga">Outorga hídrica ou outorga de uso insignificante emitida pelo órgão competente?</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="gov-app">
+                        <label for="gov-app">Mata ciliar e Áreas de Preservação Permanente (APP) preservadas e isoladas?</label>
+                    </div>
+                </div>
+                <button type="button" class="secondary-button" id="btn-validar-gov">Validar Conformidade Legal</button>
+                <div id="resultado-gov" class="cert-box" hidden>
+                    <p id="texto-gov"></p>
+                </div>
+            </section>
+
+            <section id="aba-hidroponia" class="tab-content" hidden>
+                <h2>🌱 Manual Técnico de Hidroponia</h2>
+                <p class="context-text">A técnica sustentável de cultivar alimentos em circuitos fechados economizando até 90% de água.</p>
+                <nav class="subtab-navigation">
+                    <button class="subtab-button active" data-subaba="sub-conceito">Conceito</button>
+                    <button class="subtab-button" data-subaba="sub-vantagens">Eficiência</button>
+                    <button class="subtab-button" data-subaba="sub-senar">Manejo Técnico</button>
+                </nav>
+                <div class="subtab-container">
+                    <div id="sub-conceito" class="subtab-content">
+                        <h3>Alimentos sem Solo</h3>
+                        <p>Técnica onde os canais recebem fluxo contínuo de água com os macro e micronutrientes equilibrados, abastecendo as raízes de maneira limpa.</p>
+                    </div>
+                    <div id="sub-vantagens" class="subtab-content" hidden>
+                        <h3>Por que economiza 90%?</h3>
+                        <p>Por ser um circuito fechado vedado, não existe desperdício de água sumindo pelo subsolo ou evaporando intensamente, garantindo reciclagem total do recurso hídrico.</p>
+                    </div>
+                    <div id="sub-senar" class="subtab-content" hidden>
+                        <div class="tip-card">
+                            <h3>Boletim do Agricultor (SENAR-PR):</h3>
+                            <p>Mantenha o pH rigorosamente monitorado na faixa de 5.5 a 6.5. Águas fora dessa especificação impedem que a cultura absorva a nutrição adequadamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="main-footer">
+            <p>&copy; 2026 EcoFluxo - Edição Histórica: Concurso Agrinho 30 Anos.</p>
+            <p>Em conformidade com as cartilhas oficiais de capacitação do Sistema FAEP/SENAR-PR.</p>
+        </footer>
+
+    </div>
 
     <script src="script.js"></script>
 </body>
