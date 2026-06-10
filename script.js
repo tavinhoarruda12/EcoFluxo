@@ -9,19 +9,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let nomeUsuarioGlobal = "Produtor";
 
-    btnEntrar.addEventListener("click", function() {
-        const nome = inputNome.value.trim();
-        if (nome === "") {
-            alert("Por favor, digite seu nome ou alcunha para acessar o ecossistema!");
-            return;
-        }
-        nomeUsuarioGlobal = nome;
-        telaBloqueio.style.display = "none";
-        conteudoApp.classList.remove("app-escondido");
-        conteudoApp.style.display = "block";
-        
-        falaSenarito.innerHTML = `Olá, <strong>${nomeUsuarioGlobal}</strong>! Que bom ter você aqui no EcoFluxo. Vamos transformar a sustentabilidade em resultados reais?`;
-    });
+    if (btnEntrar) {
+        btnEntrar.addEventListener("click", function() {
+            const nome = inputNome.value.trim();
+            if (nome === "") {
+                alert("Por favor, digite seu nome para acessar o aplicativo!");
+                return;
+            }
+            nomeUsuarioGlobal = nome;
+            telaBloqueio.style.display = "none";
+            conteudoApp.classList.remove("app-escondido");
+            conteudoApp.style.display = "block";
+            
+            falaSenarito.innerHTML = `Olá, <strong>${nomeUsuarioGlobal}</strong>! Bem-vindo ao EcoFluxo. Use as abas para navegar pelas ferramentas!`;
+        });
+    }
 
     // --- GERENCIADOR DE ABAS PRINCIPAIS ---
     const tabButtons = document.querySelectorAll(".tab-button");
@@ -46,29 +48,27 @@ document.addEventListener("DOMContentLoaded", function() {
     function atualizarMascote(abaId) {
         switch (abaId) {
             case "aba-produtor":
-                falaSenarito.innerHTML = `<strong>${nomeUsuarioGlobal}</strong>, use esta calculadora técnica para monitorar os litros consumidos na produção primária.`;
+                falaSenarito.innerHTML = `<strong>${nomeUsuarioGlobal}</strong>, preencha os dados abaixo para rodar a auditoria técnica de pegada hídrica.`;
                 break;
             case "aba-circular":
-                falaSenarito.innerHTML = `🔄 Incrível! Aqui você descobre como fechar os ciclos de resíduos e energia na fazenda. Design inteligente!`;
+                falaSenarito.innerHTML = `🔄 Descubra como reutilizar 100% dos insumos e energia disponíveis na propriedade rural.`;
                 break;
             case "aba-consumidor":
-                falaSenarito.innerHTML = `🏙️ Sabia que a cidade depende umbilicalmente do campo? Avalie sua pegada e o potencial pluvial de captação.`;
+                falaSenarito.innerHTML = `🏙️ Monitore os gastos virtuais invisíveis das suas compras semanais urbanas.`;
                 break;
-            case "aba-quiz":
-                falaSenarito.innerHTML = `💡 Desafio aceito! Clique nos botões para desmascarar a quantidade de água oculta em itens comuns.`;
+            case "aba-game":
+                falaSenarito.innerHTML = `🎮 <strong>Mini-game Ecológico:</strong> Regule a irrigação ideal para a sua colheita dar lucro!`;
                 break;
             case "aba-governanca":
-                falaSenarito.innerHTML = `📜 A conformidade legal protege a sua marca rural. Faça o checklist baseado nas regras do IAT e do Código Florestal.`;
+                falaSenarito.innerHTML = `📜 Verifique sua conformidade com as leis ambientais paranaenses e o IAT.`;
                 break;
             case "aba-hidroponia":
-                falaSenarito.innerHTML = `🌱 Hidroponia representa o futuro da máxima eficiência hídrica! Veja as técnicas recomendadas pelo SENAR-PR.`;
+                falaSenarito.innerHTML = `🌱 Veja os parâmetros de pH e oxigenação exigidos pelas diretrizes do SENAR-PR.`;
                 break;
-            default:
-                falaSenarito.innerHTML = `Olá, vamos continuar construindo soluções sustentáveis juntos?`;
         }
     }
 
-    // --- GERENCIADOR DE SUB-ABAS INSULADAS ---
+    // --- GERENCIADOR DE SUB-ABAS (Agroecologia e Hidroponia) ---
     function configurarSubAbas() {
         const subButtons = document.querySelectorAll(".subtab-button");
         subButtons.forEach(button => {
@@ -82,13 +82,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 blocosConteudo.forEach(bloco => bloco.hidden = true);
 
                 this.classList.add("active");
-                const targetId = this.getAttribute("data-subaba") || this.textContent.trim().toLowerCase().replace(/[^a-z0-9]/g, "-");
-                
-                let targetElement = document.getElementById(targetId);
-                if (!targetElement) {
-                    const index = Array.from(irmaosButtons).indexOf(this);
-                    targetElement = blocosConteudo[index];
-                }
+                const targetId = this.getAttribute("data-subaba");
+                const targetElement = document.getElementById(targetId);
                 
                 if (targetElement) {
                     targetElement.hidden = false;
@@ -98,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     configurarSubAbas();
 
-    // --- ABA 1: CÁLCULO DA PEGADA DO PRODUTOR RURAL (Com Selo C Alerta ativo) ---
+    // --- ABA 1: PRODUTOR RURAL ---
     const btnCalculate = document.getElementById("btn-calculate");
     const resultadosProdutor = document.getElementById("resultados-produtor");
     const valorPegada = document.getElementById("valor-pegada");
@@ -112,56 +107,39 @@ document.addEventListener("DOMContentLoaded", function() {
             const quantidade = parseFloat(document.getElementById("quantidade").value);
 
             if (!atividade || isNaN(quantidade) || quantidade <= 0) {
-                alert("Por favor, selecione uma atividade válida e preencha a quantidade positiva.");
+                alert("Selecione uma atividade e digite um valor maior que zero.");
                 return;
             }
 
             let litrosPorUnidade = 0;
-            let sitemasDica = [];
+            let dicas = [];
 
             switch (atividade) {
                 case "soja":
                     litrosPorUnidade = 1800;
-                    sitemasDica = [
-                        "Adote o Plantio Direto na Palha para reduzir a evapotranspiração do solo.",
-                        "Monitore previsões climáticas via SIMEPAR antes de realizar manejos de pulverização.",
-                        "Instale terraços agrícolas para evitar enxurradas e perda de solo superficial."
-                    ];
+                    dicas = ["Adote Plantio Direto na Palha.", "Construa terraços contra enxurradas hídricas."];
                     break;
                 case "milho":
                     litrosPorUnidade = 1200;
-                    sitemasDica = [
-                        "Faça rotação de culturas com braquiária para melhorar a porosidade do perfil de terra.",
-                        "Evite tráfego desnecessário de maquinário pesado para mitigar a compactação."
-                    ];
+                    dicas = ["Implemente rotação integrada com braquiária."];
                     break;
                 case "cafe":
                     litrosPorUnidade = 2500;
-                    sitemasDica = [
-                        "Utilize sistemas de microaspersão ou gotejamento programado se houver necessidade de irrigação.",
-                        "Adote o sombreamento parcial com árvores nativas para conservar microclima úmido."
-                    ];
+                    dicas = ["Migre para irrigação por microaspersão direcionada."];
                     break;
                 case "bovino":
                     litrosPorUnidade = 15000;
-                    sitemasDica = [
-                        "Proteja os bebedouros da radiação solar direta para evitar evaporação drástica.",
-                        "Trabalhe com pastejo rotacionado (Voisin) para otimizar o vigor da pastagem e infiltração."
-                    ];
+                    dicas = ["Adote pastejo rotacionado e proteja bebedouros do sol."];
                     break;
                 case "suino":
                     litrosPorUnidade = 4500;
-                    sitemasDica = [
-                        "Lave as baias utilizando bicos de alta pressão e vazão reduzida.",
-                        "Canalize 100% dos dejetos para lagoas de biodigestão visando reciclagem de biofertilizantes."
-                    ];
+                    dicas = ["Lave baias com bicos de alta pressão.", "Direcione dejetos para biodigestores."];
                     break;
             }
 
             const totalPegada = litrosPorUnidade * quantidade;
             valorPegada.textContent = totalPegada.toLocaleString("pt-BR");
             
-            // Lógica ajustada dos Selos conforme o volume gerado
             if (totalPegada > 500000) {
                 esgBadge.textContent = "Selo C Alerta ⚠️";
                 barraEsg.value = 35;
@@ -174,9 +152,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             listaSugestoes.innerHTML = "";
-            sitemasDica.forEach(sug => {
+            dicas.forEach(dica => {
                 const li = document.createElement("li");
-                li.textContent = sug;
+                li.textContent = dica;
                 listaSugestoes.appendChild(li);
             });
 
@@ -184,7 +162,81 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // --- ABA 3: CALCULADORA DO CONSUMIDOR E CAPTAÇÃO DE CHUVA ---
+    // --- ABA 4: LÓGICA DO MINI-GAME DE IRRIGAÇÃO (Nova!) ---
+    const sliderAgua = document.getElementById("slider-agua");
+    const txtPorcentagem = document.getElementById("txt-porcentagem");
+    const btnAbrirTorneira = document.getElementById("btn-abrir-torneira");
+    const gameResultados = document.getElementById("game-resultados");
+    
+    const hortaVisual = document.getElementById("horta-visual");
+    const hortaEmoji = document.getElementById("horta-emoji");
+    const hortaEfeitoChuva = document.getElementById("horta-efeito-chuva");
+
+    const gameStatusSolo = document.getElementById("game-status-solo");
+    const gameDiasMolhada = document.getElementById("game-dias-molhada");
+    const gameFinanceiro = document.getElementById("game-financeiro");
+    const gameFeedbackTexto = document.getElementById("game-feedback-texto");
+
+    if (sliderAgua && txtPorcentagem) {
+        sliderAgua.addEventListener("input", function() {
+            txtPorcentagem.textContent = `${this.value}%`;
+        });
+    }
+
+    if (btnAbrirTorneira) {
+        btnAbrirTorneira.addEventListener("click", function() {
+            const volume = parseInt(sliderAgua.value);
+            
+            // Ativar visual da animação de chuva
+            hortaEfeitoChuva.className = "chuva-animada";
+            
+            // Variáveis do cálculo
+            let status = "";
+            let dias = 0;
+            let financeiro = "";
+            let feedback = "";
+
+            // Lógica do jogo (Seco, Ideal ou Encharcado)
+            if (volume < 40) {
+                status = "Seca Extrema 🍂";
+                dias = Math.round(volume / 10);
+                financeiro = "Prejuízo: - R$ 1.500";
+                feedback = "A horta secou! Sem água virtual suficiente, as plantas murcharam e você perdeu a colheita do período.";
+                
+                hortaVisual.className = "horta-status status-seco";
+                hortaEmoji.textContent = "🍂";
+            } 
+            else if (volume >= 40 && volume <= 70) {
+                status = "Manejo Ideal! 🟢";
+                dias = Math.round(volume / 5); // Fica úmida de forma saudável
+                financeiro = "Lucro: + R$ 3.000 🏅";
+                feedback = "Excelente! Equilíbrio hídrico perfeito recomendado pelas cartilhas do SENAR-PR. Solo úmido na medida certa.";
+                
+                hortaVisual.className = "horta-status status-ideal";
+                hortaEmoji.textContent = "🥦";
+            } 
+            else {
+                status = "Encharcado! ⚠️";
+                dias = Math.round(volume / 3); // Fica alagada por muito tempo
+                financeiro = "Prejuízo Total: - R$ 2.200";
+                feedback = "O solo virou um lamaçal! As raízes apodreceram por falta de oxigênio e o fertilizante escorreu com a enxurrada.";
+                
+                hortaVisual.className = "horta-status status-encharcado";
+                hortaEmoji.textContent = "🥀";
+            }
+
+            // Exibir as saídas nas telas/abas do relatório
+            gameStatusSolo.textContent = status;
+            gameDiasMolhada.textContent = `${dias} dias seguidos`;
+            gameFinanceiro.textContent = financeiro;
+            gameFeedbackTexto.innerHTML = `<strong>Análise Técnica:</strong> ${feedback}`;
+
+            // Exibe o painel de resultados do game
+            gameResultados.hidden = false;
+        });
+    }
+
+    // --- ABA 3: CONSUMIDOR E CAPTAÇÃO ---
     const btnCalcConsumer = document.getElementById("btn-calc-consumer");
     const resultadoConsumidor = document.getElementById("resultado-consumidor");
 
@@ -192,9 +244,9 @@ document.addEventListener("DOMContentLoaded", function() {
         btnCalcConsumer.addEventListener("click", function() {
             const leite = parseInt(document.getElementById("leite-consumo").value) || 0;
             const cafe = parseInt(document.getElementById("cafe-consumo").value) || 0;
-
-            const pegadaOculta = (leite * 200) + (cafe * 130);
-            resultadoConsumidor.innerHTML = `Consumo Semanal Analisado: Esse hábito alimentar exige aproximadamente <strong>${pegadaOculta.toLocaleString("pt-BR")} litros</strong> de água virtual semanalmente de forma invisível.`;
+            const total = (leite * 200) + (cafe * 130);
+            
+            resultadoConsumidor.innerHTML = `Seu impacto semanal estimado é de: <strong>${total.toLocaleString("pt-BR")} litros</strong> de água oculta.`;
             resultadoConsumidor.hidden = false;
         });
     }
@@ -206,34 +258,15 @@ document.addEventListener("DOMContentLoaded", function() {
     if (btnCalcRain) {
         btnCalcRain.addEventListener("click", function() {
             const area = parseFloat(document.getElementById("area-telhado").value);
-            if (isNaN(area) || area <= 0) {
-                alert("Insira uma área válida em metros quadrados.");
-                return;
+            if (!isNaN(area) && area > 0) {
+                const vol = Math.round(area * 1400 * 0.85);
+                valorChuva.textContent = vol.toLocaleString("pt-BR");
+                resultadoChuva.hidden = false;
             }
-
-            const volumeAnual = Math.round(area * 1400 * 0.85);
-            valorChuva.textContent = volumeAnual.toLocaleString("pt-BR");
-            resultadoChuva.hidden = false;
         });
     }
 
-    // --- ABA 4: INTERATIVIDADE DO QUIZ DA ÁGUA ---
-    const quizButtons = document.querySelectorAll(".quiz-btn");
-    const quizDisplay = document.getElementById("quiz-display");
-    const quizTextoResultado = document.getElementById("quiz-texto-resultado");
-
-    quizButtons.forEach(btn => {
-        btn.addEventListener("click", function() {
-            const litros = this.getAttribute("data-litros");
-            const itemNome = this.getAttribute("data-item");
-            
-            quizTextoResultado.innerHTML = `Para produzir <strong>${itemNome}</strong>, são consumidos impressionantes <span style='color:#e63946; font-size:1.3rem; font-weight:bold;'>${parseInt(litros).toLocaleString("pt-BR")} litros</span> de água virtual ao longo de toda a sua cadeia de fabricação e insumos!`;
-            quizDisplay.hidden = false;
-            quizDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        });
-    });
-
-    // --- ABA 5: AUDITORIA E VALIDAÇÃO DE GOVERNANÇA ESG ---
+    // --- ABA 5: GOVERNANÇA ESG ---
     const btnValidarGov = document.getElementById("btn-validar-gov");
     const resultadoGov = document.getElementById("resultado-gov");
     const textoGov = document.getElementById("texto-gov");
@@ -243,29 +276,17 @@ document.addEventListener("DOMContentLoaded", function() {
             const car = document.getElementById("gov-car").checked;
             const outorga = document.getElementById("gov-outorga").checked;
             const app = document.getElementById("gov-app").checked;
-            const reserva = document.getElementById("gov-reserva").checked;
 
-            let marcados = 0;
-            if (car) marcados++;
-            if (outorga) marcados++;
-            if (app) marcados++;
-            if (reserva) marcados++;
-
+            let marcados = (car ? 1 : 0) + (outorga ? 1 : 0) + (app ? 1 : 0);
             resultadoGov.hidden = false;
 
-            if (marcados === 4) {
+            if (marcados === 3) {
                 textoGov.style.color = "var(--color-success)";
-                textoGov.innerHTML = `🏅 EXCELÊNCIA ESG CONSTATADA! Sua propriedade atende integralmente os critérios da Lei Estadual nº 12.726/1999 e do Código Florestal Brasileiro. Está apta para solicitar Certificação de Produto Sustentável e as melhores taxas do Plano Safra Verde!`;
-            } else if (marcados >= 2) {
-                textoGov.style.color = "var(--color-secondary)";
-                textoGov.innerHTML = `⚠️ ATENÇÃO REQUERIDA (${marcados}/4): Você já possui pilares fundamentais, mas a falta de alguns documentos (como Outorga do IAT ou regularização de APP) pode gerar restrições. Busque o escritório local do SENAR-PR para orientações gratuitas!`;
+                textoGov.textContent = "🏅 100% de Conformidade Ecológica com as normas do Paraná e diretrizes ESG!";
             } else {
                 textoGov.style.color = "var(--color-accent)";
-                textoGov.innerHTML = `🚨 ALERTA CRÍTICO DE CONFORMIDADE: Menos da metade dos critérios de governança hídrica e ambiental foram preenchidos. É urgente iniciar um plano de manejo corretivo e georreferenciamento para evitar sanções.`;
+                textoGov.textContent = "⚠️ Atenção! Há pendências regulatórias. Regularize junto ao IAT para evitar sanções rurais.";
             }
-            
-            resultadoGov.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
     }
-
 });
