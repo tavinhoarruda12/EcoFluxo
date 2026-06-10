@@ -33,7 +33,7 @@
                 <button class="tab-button active" data-aba="aba-produtor">📊 Produtor Rural</button>
                 <button class="tab-button" data-aba="aba-circular">🔄 Agroecologia Circular</button>
                 <button class="tab-button" data-aba="aba-consumidor">🏙️ Consumidor Urbano</button>
-                <button class="tab-button" data-aba="aba-quiz">💡 Quiz da Água</button>
+                <button class="tab-button" data-aba="aba-game">🎮 Jogo da Irrigação</button>
                 <button class="tab-button" data-aba="aba-governanca">📜 Governança ESG</button>
                 <button class="tab-button" data-aba="aba-hidroponia">🌱 Hidroponia</button>
             </nav>
@@ -166,22 +166,40 @@
                 </div>
             </section>
 
-            <section id="aba-quiz" class="tab-content" hidden>
-                <h2>Quiz da Água Virtual (Litros Invisíveis)</h2>
-                <p class="context-text">Clique nos botões para descobrir o peso invisível de produção de cada item de mercado:</p>
+            <section id="aba-game" class="tab-content" hidden>
+                <h2>🎮 Simulador de Irrigação Inteligente</h2>
+                <p class="context-text">Ajuste o nível de irrigação e chuva para a horta. Tente atingir a umidade ideal (entre 40% e 70%) para garantir uma boa colheita sem desperdiçar água ou encharcar o solo!</p>
                 
-                <div class="quiz-grid">
-                    <button type="button" class="quiz-btn" data-litros="130" data-item="uma xícara de café">☕ Xícara de Café</button>
-                    <button type="button" class="quiz-btn" data-litros="2500" data-item="uma camiseta de algodão">👕 Camiseta de Algodão</button>
-                    <button type="button" class="quiz-btn" data-litros="15000" data-item="1kg de carne bovina">🥩 1kg de Carne Bovina</button>
-                    <button type="button" class="quiz-btn" data-litros="8000" data-item="um par de sapatos de couro">👞 Par de Sapatos</button>
-                </div>
-                
-                <div id="quiz-display" class="quiz-display-card" hidden>
-                    <p id="quiz-texto-resultado"></p>
-                    <div class="pedagogic-box">
-                        <p class="pedagogic-title">💡 O que é Água Virtual?</p>
-                        <p>É toda a água utilizada indiretamente desde as fases iniciais da matéria-prima até a comercialização logística final do item.</p>
+                <div class="game-container">
+                    <div id="horta-visual" class="horta-status status-seco">
+                        <span id="horta-emoji">🌱</span>
+                        <div id="horta-efeito-chuva" class="chuva-escondida">🌧️🌧️🌧️</div>
+                    </div>
+
+                    <div class="control-box">
+                        <label for="slider-agua">Volume de Água Aplicado: <span id="txt-porcentagem">30%</span></label>
+                        <input type="range" id="slider-agua" min="0" max="100" value="30" class="game-slider">
+                        
+                        <button type="button" id="btn-abrir-torneira">Ligar Irrigação e Avaliar</button>
+                    </div>
+
+                    <div id="game-resultados" class="game-results-panel" hidden>
+                        <h3>📋 Relatório de Campo do Agrinho:</h3>
+                        <div class="game-grid-status">
+                            <div class="game-card-mini">
+                                <strong>Status do Solo:</strong>
+                                <p id="game-status-solo">Seco</p>
+                            </div>
+                            <div class="game-card-mini">
+                                <strong>Dias Solos Úmido:</strong>
+                                <p id="game-dias-molhada">0 dias</p>
+                            </div>
+                            <div class="game-card-mini">
+                                <strong>Balanço Comercial:</strong>
+                                <p id="game-financeiro">R$ 0</p>
+                            </div>
+                        </div>
+                        <p id="game-feedback-texto" class="feedback-text-box"></p>
                     </div>
                 </div>
             </section>
