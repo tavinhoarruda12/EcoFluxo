@@ -62,7 +62,7 @@ body {
     gap: 0.3rem;
     max-width: 950px;
     margin: 0 auto;
-    overflow-x: auto; /* Garante rolagem se a tela for pequena (UX Mobile) */
+    overflow-x: auto;
     white-space: nowrap;
 }
 
