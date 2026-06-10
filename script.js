@@ -1,11 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
+    let nomeSalvo = "";
 
-    /* ==========================================================================
-       1. SISTEMA DE ALTERNÂNCIA DE ABAS PRINCIPAIS
-       ========================================================================== */
+    /* CONTROLE DE ACESSO (TELA DE BLOQUEIO) */
+    const btnEntrar = document.getElementById("btn-entrar-app");
+    const telaBloqueio = document.getElementById("tela-bloqueio");
+    const conteudoApp = document.getElementById("conteudo-aplicativo");
+    const falaSenarito = document.getElementById("fala-senarito");
+
+    btnEntrar.addEventListener("click", () => {
+        const inputNome = document.getElementById("nome-usuario").value.trim();
+        if (inputNome === "") {
+            alert("Por favor, digite seu nome antes de prosseguir!");
+            return;
+        }
+        nomeSalvo = inputNome;
+        telaBloqueio.setAttribute("hidden", "true");
+        conteudoApp.classList.remove("app-escondido");
+
+        falaSenarito.innerHTML = `Olá, <strong>${nomeSalvo}</strong>! Que bom ter você aqui no EcoFluxo. Vamos desenhar uma propriedade rural nota 10?`;
+    });
+
+    /* NAVEGAÇÃO ENTRE ABAS PRINCIPAIS */
     const tabButtons = document.querySelectorAll(".tab-button");
     const tabContents = document.querySelectorAll(".tab-content");
-    const falaSenarito = document.getElementById("fala-senarito");
 
     tabButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -16,37 +34,45 @@ document.addEventListener("DOMContentLoaded", () => {
             const targetAbaId = button.getAttribute("data-aba");
             document.getElementById(targetAbaId).removeAttribute("hidden");
 
-            // Senarito interage dinamicamente mudando de aba
-            switch(targetAbaId) {
-                case "aba-produtor":
-                    falaSenarito.innerHTML = "Muito bem! Aqui o produtor insere o manejo rural para verificar os indicadores e dados do <strong>SENAR-PR</strong>.";
-                    break;
-                case "aba-consumidor":
-                    falaSenarito.innerHTML = "Excelente! Na aba urbana calculamos o consumo invisível e o potencial de captação de cisternas.";
-                    break;
-                case "aba-quiz":
-                    falaSenarito.innerHTML = "Hora do teste! Clique nos botões para descobrir o segredo da <strong>Água Virtual</strong> oculta nos objetos.";
-                    break;
-                case "aba-governanca":
-                    falaSenarito.innerHTML = "Critérios ESG importantes! Vamos verificar a regularização das APPs e do Cadastro Ambiental Rural.";
-                    break;
-                case "aba-hidroponia":
-                    falaSenarito.innerHTML = "Tecnologia pura! Veja como a hidroponia revoluciona poupando até 90% da nossa água.";
-                    break;
+            // Respostas simuladas de comando de voz do Senarito
+            if (nomeSalvo !== "") {
+                switch(targetAbaId) {
+                    case "aba-produtor":
+                        falaSenarito.innerHTML = `Veja, <strong>${nomeSalvo}</strong>! Aqui calculamos a pegada do manejo com equações científicas do SENAR-PR.`;
+                        break;
+                    case "aba-circular":
+                        falaSenarito.innerHTML = `Excelente escolha, <strong>${nomeSalvo}</strong>! Veja como fechar ciclos com biodigestores e permacultura.`;
+                        break;
+                    case "aba-consumidor":
+                        falaSenarito.innerHTML = `Conexão campo-cidade! Veja quanta água o produtor gerencia para abastecer sua rotina urbana, <strong>${nomeSalvo}</strong>.`;
+                        break;
+                    case "aba-quiz":
+                        falaSenarito.innerHTML = `Hora de testar seus conhecimentos sobre Água Oculta, <strong>${nomeSalvo}</strong>!`;
+                        break;
+                    case "aba-governanca":
+                        falaSenarito.innerHTML = `Critérios ESG importantes! Vamos checar o CAR e a regularização das APPs.`;
+                        break;
+                    case "aba-hidroponia":
+                        falaSenarito.innerHTML = `Tecnologia hidropônica! Água circulando limpa economizando até 90%, <strong>${nomeSalvo}</strong>!`;
+                        break;
+                }
             }
         });
     });
 
-    /* ==========================================================================
-       2. SISTEMA DE SUB-ABAS (MANUAL DE HIDROPONIA)
-       ========================================================================== */
+    /* NAVEGAÇÃO DE SUB-ABAS UNIVERSAL */
     const subtabButtons = document.querySelectorAll(".subtab-button");
     const subtabContents = document.querySelectorAll(".subtab-content");
 
     subtabButtons.forEach(subBtn => {
         subBtn.addEventListener("click", () => {
-            subtabButtons.forEach(btn => btn.classList.remove("active"));
-            subtabContents.forEach(content => content.setAttribute("hidden", "true"));
+            // Descobre o container pai para isolar a troca de sub-abas daquela seção específica
+            const containerPai = subBtn.closest(".tab-content");
+            const botoesIrmãos = containerPai.querySelectorAll(".subtab-button");
+            const conteudosIrmãos = containerPai.querySelectorAll(".subtab-content");
+
+            botoesIrmãos.forEach(btn => btn.classList.remove("active"));
+            conteudosIrmãos.forEach(content => content.setAttribute("hidden", "true"));
 
             subBtn.classList.add("active");
             const targetSubAbaId = subBtn.getAttribute("data-subaba");
@@ -54,15 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* ==========================================================================
-       3. CALCULADORA DO PRODUTOR RURAL (PEGADA HÍDRICA & ESG)
-       ========================================================================== */
+    /* CALCULADORA DO PRODUTOR (BASE DE DADOS) */
     const dadosHidricos = {
-        soja: { fator: 5500000, esg: 85, dicas: ["Adote o Plantio Direto para manter a palhada cobrindo e protegendo o solo.", "Utilize monitoramento por sensores para ajustar os pivôs de irrigação."] },
-        milho: { fator: 4500000, esg: 75, dicas: ["Faça rotação de culturas para estruturar o perfil físico do solo.", "Siga rigorosamente o zoneamento agrícola de plantio."] },
-        cafe: { fator: 6000000, esg: 90, dicas: ["Prefira sistemas de gotejamento localizado subterrâneo ou superficial.", "Pratique a recirculação da água nos tanques de lavagem pós-colheita."] },
-        bovino: { fator: 120, esg: 70, dicas: ["Instale calhas nos barracões de ordenha para aproveitamento pluvial.", "Faça reuso de efluentes lavados para processos de fertirrigação."] },
-        suino: { fator: 35, esg: 80, dicas: ["Ajuste periodicamente as chupetas de pressão dos bebedouros.", "Direcione os resíduos para biodigestores gerando energia limpa."] }
+        soja: { fator: 5500000, esg: 85, dicas: ["Adote o Sistema de Plantio Direto para manter a umidade residual no solo.", "Instale sensores de umidade para evitar irrigações desnecessárias."] },
+        milho: { fator: 4500000, esg: 75, dicas: ["Realize rotação de culturas para estruturar biologicamente o perfil da terra.", "Consulte o zoneamento pluvial do Paraná antes de semear."] },
+        cafe: { fator: 6000000, esg: 90, dicas: ["Utilize mangueiras de gotejamento subterrâneas para mitigar a evapotranspiração.", "Promova a recirculação interna d'água no lavador de café."] },
+        bovino: { fator: 120, esg: 70, dicas: ["Colete água pluvial das calhas da sala de ordenha para lavagem posterior de pisos.", "Use dejetos animais curtidos em processos estruturados de fertirrigação."] },
+        suino: { fator: 35, esg: 80, dicas: ["Regule periodicamente as chupetas de pressão dos bebedouros das baias.", "Direcione resíduos densos a biodigestores acoplados para geração energética."] }
     };
 
     const btnCalculate = document.getElementById("btn-calculate");
@@ -72,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const resultadosProdutor = document.getElementById("resultados-produtor");
 
         if (!atividade || isNaN(quantidade) || quantidade <= 0) {
-            alert("Preencha a atividade e insira uma quantidade válida!");
+            alert("Insira os parâmetros corretamente!");
             return;
         }
 
@@ -82,16 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("valor-pegada").textContent = pegadaTotal.toLocaleString("pt-BR");
         resultadosProdutor.removeAttribute("hidden");
 
-        // Atualização da barra ESG e Selo
         const barraEsg = document.getElementById("barra-esg");
         const badge = document.getElementById("esg-badge");
         barraEsg.value = info.esg;
         
-        if (info.esg >= 85) badge.textContent = "A+ Sustentável";
-        else if (info.esg >= 75) badge.textContent = "B Regulamentado";
-        else badge.textContent = "C Atenção";
+        if (info.esg >= 85) badge.textContent = "Selo A+ Certificado";
+        else if (info.esg >= 75) badge.textContent = "Selo B Regular";
+        else badge.textContent = "Selo C Alerta";
 
-        // Preenche as sugestões
         const lista = document.getElementById("lista-sugestoes");
         lista.innerHTML = "";
         info.dicas.forEach(dica => {
@@ -99,21 +121,17 @@ document.addEventListener("DOMContentLoaded", () => {
             li.textContent = dica;
             lista.appendChild(li);
         });
-
-        falaSenarito.innerHTML = `Cálculo realizado! Essa produção movimentou cerca de <strong>${pegadaTotal.toLocaleString("pt-BR")}</strong> litros d'água no ciclo do ecossistema.`;
     });
 
-    /* ==========================================================================
-       4. CALCULADORA DO CONSUMIDOR URBANO & CISTERNAS
-       ========================================================================== */
+    /* CALCULADORA DO CONSUMIDOR & CHUVA */
     const btnCalcConsumer = document.getElementById("btn-calc-consumer");
     btnCalcConsumer.addEventListener("click", () => {
         const leite = parseFloat(document.getElementById("leite-consumo").value) || 0;
         const cafe = parseFloat(document.getElementById("cafe-consumo").value) || 0;
-        const totalConsumidor = (leite * 200) + (cafe * 130);
+        const totalUrbano = (leite * 200) + (cafe * 130);
 
         const outConsumer = document.getElementById("resultado-consumidor");
-        outConsumer.innerHTML = `Seu consumo semanal desses itens gerou um impacto indireto de <strong>${totalConsumidor.toLocaleString("pt-BR")} litros</strong> monitorados no campo.`;
+        outConsumer.innerHTML = `Prezado(a) <strong>${nomeSalvo}</strong>, para suprir essa rotina alimentar semanal, foram alocados indiretamente no campo cerca de <strong>${totalUrbano.toLocaleString("pt-BR")} litros</strong> de água virtual.`;
         outConsumer.removeAttribute("hidden");
     });
 
@@ -121,50 +139,44 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCalcRain.addEventListener("click", () => {
         const area = parseFloat(document.getElementById("area-telhado").value);
         if (isNaN(area) || area <= 0) {
-            alert("Insira uma área de telhado válida!");
+            alert("Insira uma área válida!");
             return;
         }
-
-        // Média pluvial do PR simulada com fator de aproveitamento (0.85)
-        const captação = Math.round(area * 1400 * 0.85);
-        document.getElementById("valor-chuva").textContent = captação.toLocaleString("pt-BR");
+        // Fórmula: Área * Índice Pluv. PR médio (1400mm) * Eficiência Cisterna (85%)
+        const volumeCaptado = Math.round(area * 1400 * 0.85);
+        document.getElementById("valor-chuva").textContent = volumeCaptado.toLocaleString("pt-BR");
         document.getElementById("resultado-chuva").removeAttribute("hidden");
     });
 
-    /* ==========================================================================
-       5. QUIZ DA ÁGUA OCULTA
-       ========================================================================== */
+    /* QUIZ DA ÁGUA OCULTA */
     const quizButtons = document.querySelectorAll(".quiz-btn");
     const quizDisplay = document.getElementById("quiz-display");
     const quizText = document.getElementById("quiz-texto-resultado");
 
-    quizButtons.forEach(qBtn => {
-        qBtn.addEventListener("click", () => {
-            const litros = qBtn.getAttribute("data-litros");
-            const item = qBtn.getAttribute("data-item");
-
-            quizText.innerHTML = `Impressionante! São necessários aproximadamente <strong>${parseInt(litros).toLocaleString("pt-BR")} litros</strong> de água limpa para produzir ${item}.`;
+    quizButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const litros = btn.getAttribute("data-litros");
+            const item = btn.getAttribute("data-item");
+            quizText.innerHTML = `Incrível! Estima-se o uso de até <strong>${parseInt(litros).toLocaleString("pt-BR")} litros</strong> de água integrada para consolidar ${item}.`;
             quizDisplay.removeAttribute("hidden");
         });
     });
 
-    /* ==========================================================================
-       6. CHECKLIST DE GOVERNANÇA ESG
-       ========================================================================== */
+    /* CHECKLIST GOVERNANÇA ESG */
     const btnValidarGov = document.getElementById("btn-validar-gov");
     btnValidarGov.addEventListener("click", () => {
         const car = document.getElementById("gov-car").checked;
         const outorga = document.getElementById("gov-outorga").checked;
         const app = document.getElementById("gov-app").checked;
-        
         const resGov = document.getElementById("resultado-gov");
         const txtGov = document.getElementById("texto-gov");
+
         resGov.removeAttribute("hidden");
 
         if (car && outorga && app) {
-            txtGov.innerHTML = "🏆 <strong>Excelente!</strong> Sua propriedade cumpre 100% das obrigações de Governança Hídrica e Ambiental. Certificado de Produtor Guardião Ativo!";
+            txtGov.innerHTML = `🏆 <strong>Parabéns, ${nomeSalvo}!</strong> Sua propriedade atende a todos os regulamentos de Governança Hídrica e Ambiental. Selo Produtor Guardião Ativado!`;
         } else {
-            txtGov.innerHTML = "⚠️ <strong>Atenção:</strong> Faltam critérios para atingir a conformidade legal. Busque orientações e cursos de capacitação técnica gratuitos oferecidos pelo <strong>SENAR-PR</strong>.";
+            txtGov.innerHTML = `⚠️ <strong>Faltam requisitos regulatórios:</strong> É essencial alinhar a documentação legal da fazenda. Busque capacitações gratuitas focadas em sustentabilidade no <strong>SENAR-PR</strong>.`;
         }
     });
 });
