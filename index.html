@@ -91,11 +91,10 @@
                 <h2>Propriedade Tecnológica & Agroecologia Circular</h2>
                 <p class="context-text">Explore os pilares fundamentais da permacultura aplicada para eliminar desperdícios.</p>
                 
-                <nav class="subtab-navigation">
+                <nav class="subtab-navigation" data-grupo="circular">
                     <button class="subtab-button active" data-subaba="circ-agua">💧 Água & Ciclagem</button>
                     <button class="subtab-button" data-subaba="circ-energia">⚡ Energia & Adubos</button>
                     <button class="subtab-button" data-subaba="circ-integracao">🌳 Integração (SAFs)</button>
-                    <button class="subtab-button" data-subaba="circ-renda">💰 Renda & Turismo</button>
                 </nav>
 
                 <div class="subtab-container">
@@ -103,15 +102,11 @@
                         <h3>Manejo Inteligente de Recursos Hídricos</h3>
                         <div class="feature-box">
                             <h4>Gravity Flow & Design de Linha de Chave (Keyline)</h4>
-                            <p>As calhas conduzem a água da chuva por gravidade diretamente para as zonas de cultivo e tanques elevados, zerando o gasto com motobombas.</p>
+                            <p>As calhas conduzem a água da chuva por gravidade diretamente para as zonas de cultivo, zerando o gasto com motobombas.</p>
                         </div>
                         <div class="feature-box">
                             <h4>Círculos de Bananeiras para Águas Cinzas</h4>
                             <p>As águas de chuveiros e pias passam por uma filtragem física natural alimentando bananeiras, que transpiram o excesso com segurança.</p>
-                        </div>
-                        <div class="feature-box">
-                            <h4>Bacias de Evapotranspiração (BET) para Águas Negras</h4>
-                            <p>Sistema vedado para tratamento de efluentes sanitários sem risco de contaminação do lençol freático.</p>
                         </div>
                     </div>
 
@@ -128,21 +123,13 @@
                     </div>
 
                     <div id="circ-integracao" class="subtab-content" hidden>
-                        <h3>Sistemas Agroflorestais (SAFs) e Redes Ecológicas</h3>
+                        <h3>Sistemas Agroflorestais (SAFs)</h3>
                         <div class="highlight-banner-agro">
-                            <h4>Benefícios Práticos do Consórcio Agroflorestal:</h4>
+                            <h4>Benefícios Práticos do Consórcio:</h4>
                             <ul>
-                                <li><strong>Retenção de Umidade:</strong> A folhagem densa reduz a evaporação direta da terra.</li>
-                                <li><strong>Trator de Galinhas:</strong> Estruturas móveis onde as aves limpam pragas e adubam naturalmente os canteiros rurais.</li>
+                                <li><strong>Retenção de Umidade:</strong> A folhagem densa reduz a evaporação direta da terra nua.</li>
+                                <li><strong>Trator de Galinhas:</strong> Estruturas móveis onde as aves limpam pragas e adubam canteiros.</li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <div id="circ-renda" class="subtab-content" hidden>
-                        <h3>Agroecologia como Modelo de Negócio</h3>
-                        <div class="feature-box">
-                            <h4>Turismo de Vivência</h4>
-                            <p>Hospedagem em chalés sustentáveis integrando a rotina do campo à educação ambiental de centros urbanos.</p>
                         </div>
                     </div>
                 </div>
@@ -200,7 +187,7 @@
             </section>
 
             <section id="aba-governanca" class="tab-content" hidden>
-                <h2>Checklist e Auditoria de Governança Ambiental (ESG)</h2>
+                <h2>Checklist de Governança Ambiental (ESG)</h2>
                 <p class="context-text">Avalie a regularidade jurídica, hídrica e ambiental frente aos órgãos fiscalizadores.</p>
                 
                 <div class="gov-sections-container">
@@ -209,7 +196,7 @@
                         <div class="gov-checklist">
                             <div class="check-item">
                                 <input type="checkbox" id="gov-car">
-                                <label for="gov-car"><strong>Cadastro Ambiental Rural (CAR):</strong> Delimitação georreferenciada obrigatória por lei.</label>
+                                <label for="gov-car"><strong>Cadastro Ambiental Rural (CAR):</strong> Delimitação georreferenciada obrigatória.</label>
                             </div>
                             <div class="check-item">
                                 <input type="checkbox" id="gov-outorga">
@@ -217,7 +204,7 @@
                             </div>
                             <div class="check-item">
                                 <input type="checkbox" id="gov-app">
-                                <label for="gov-app"><strong>Preservação de APP:</strong> Manutenção integral de matas ciliares rurais.</label>
+                                <label for="gov-app"><strong>Preservação de APP:</strong> Manutenção integral de matas ciliares.</label>
                             </div>
                         </div>
                     </div>
@@ -242,24 +229,24 @@
                 <h2>🌱 Manual Técnico de Hidroponia Avançada</h2>
                 <p class="context-text">Entenda o funcionamento de plantios eficientes em circuito fechado recirculante.</p>
                 
-                <nav class="subtab-navigation">
-                    <button class="subtab-button active" data-subaba="sub-conceito">Conceito Geral</button>
-                    <button class="subtab-button" data-subaba="sub-vantagens">Eficiência Dinâmica</button>
-                    <button class="subtab-button" data-subaba="sub-senar">Manejo Técnico (SENAR)</button>
+                <nav class="subtab-navigation" data-grupo="hidroponia">
+                    <button class="subtab-button active" data-subaba="sub-modo-conceito">Conceito Geral</button>
+                    <button class="subtab-button" data-subaba="sub-modo-vantagens">Eficiência Dinâmica</button>
+                    <button class="subtab-button" data-subaba="sub-modo-senar">Manejo Técnico (SENAR)</button>
                 </nav>
 
                 <div class="subtab-container">
-                    <div id="sub-conceito" class="subtab-content">
+                    <div id="sub-modo-conceito" class="subtab-content">
                         <h3>Nutrição Sem Solo</h3>
                         <p>O solo é substituído por água adicionada de macronutrientes assimiláveis levados diretamente à raiz vegetal.</p>
                     </div>
 
-                    <div id="sub-vantagens" class="subtab-content" hidden>
+                    <div id="sub-modo-vantagens" class="subtab-content" hidden>
                         <h3>Economia de até 90%</h3>
                         <p>Ao contrário dos sistemas tradicionais em terra, a água excedente não infiltra no subsolo profundo; ela retorna ao reservatório para ser reutilizada continuamente.</p>
                     </div>
 
-                    <div id="sub-senar" class="subtab-content" hidden>
+                    <div id="sub-modo-senar" class="subtab-content" hidden>
                         <div class="tip-card">
                             <h3>Padrões Técnicos SENAR-PR</h3>
                             <ul>
@@ -274,7 +261,7 @@
         </main>
 
         <footer class="main-footer">
-            <p>&copy; 2026 EcoFluxo - Concurso Agrinho 30 Anos. Conteúdos baseados no Sistema FAEP/SENAR-PR.</p>
+            <p>&copy; 2026 EcoFluxo - Concurso Agrinho 30 Anos. Sistema FAEP/SENAR-PR.</p>
         </footer>
     </div>
 
